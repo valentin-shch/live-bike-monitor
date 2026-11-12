@@ -7,7 +7,8 @@ from collector.http import HttpClient
 class FakeAdapter(requests.adapters.BaseAdapter):
     """Plays a script of answers instead of touching the network.
 
-    Each script item is a status code, a (status, headers) pair, or an exception to raise.
+    Each script item is a status code, a (status, headers) pair, bytes (a 200 with that
+    body), or an exception to raise.
     """
 
     def __init__(self, script):
@@ -20,12 +21,18 @@ class FakeAdapter(requests.adapters.BaseAdapter):
         item = self.script.pop(0)
         if isinstance(item, Exception):
             raise item
-        status, headers = item if isinstance(item, tuple) else (item, {})
+        body = b'{"ok": true}'
+        if isinstance(item, bytes):
+            status, headers, body = 200, {}, item
+        elif isinstance(item, tuple):
+            status, headers = item
+        else:
+            status, headers = item, {}
 
         response = requests.Response()
         response.status_code = status
         response.headers.update(headers)
-        response._content = b'{"ok": true}'
+        response._content = body
         response.url = request.url
         response.request = request
         return response

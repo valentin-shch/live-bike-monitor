@@ -51,15 +51,25 @@ def test_gives_up_after_max_attempts(make_client):
     assert len(sleeps) == 4
 
 
-def test_backoff_waits_stay_under_the_exponential_ceiling(make_client):
+def test_backoff_waits_stay_between_half_and_full_ceiling(make_client):
     client, adapter, sleeps = make_client([503] * 5)
 
     with pytest.raises(HttpError):
         client.get_json(URL)
 
-    # Jitter makes each wait random, but never above 1, 2, 4, 8 seconds.
+    # Jitter makes each wait random, but always between half and all of 1, 2, 4, 8 seconds.
     for wait, ceiling in zip(sleeps, [1, 2, 4, 8]):
-        assert 0 <= wait <= ceiling
+        assert ceiling / 2 <= wait <= ceiling
+
+
+def test_each_wait_is_at_least_as_long_as_the_previous(make_client):
+    client, adapter, sleeps = make_client([503] * 5)
+
+    with pytest.raises(HttpError):
+        client.get_json(URL)
+
+    for earlier, later in zip(sleeps, sleeps[1:]):
+        assert later >= earlier
 
 
 def test_retry_after_is_obeyed(make_client):

@@ -77,5 +77,8 @@ class HttpClient:
             # Longer than we are willing to wait inside one run: give up, the next run retries.
             return seconds if seconds <= self.max_delay else None
 
+        # Equal jitter: half the ceiling is fixed, half is random. The fixed half guarantees
+        # each wait is at least as long as the one before; full jitter (0 to ceiling) spreads
+        # a crowd of clients better, but we are a single client.
         ceiling = min(self.max_delay, self.base_delay * 2 ** (attempt - 1))
-        return random.uniform(0, ceiling)
+        return ceiling / 2 + random.uniform(0, ceiling / 2)

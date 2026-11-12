@@ -24,3 +24,7 @@ WINDOW_MINUTES = 15
 MIN_EVENT_SNAPSHOTS = 2
 
 RAW_RETENTION_DAYS = 14
+
+# A few broken stations are a glitch: skip them and keep the rest. Above 5% (25 of ~500)
+# the feed has most likely changed shape, and we reject the whole snapshot.
+MAX_INVALID_SHARE = 0.05
