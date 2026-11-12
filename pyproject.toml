@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Lets tests import collector/ and api/ from the repo root without installing the project.
+pythonpath = ["."]
