@@ -13,6 +13,7 @@ MODULES = [
     "api.models",
     "api.auth",
     "demo.receiver",
+    "pages.build",
 ]
 
 
