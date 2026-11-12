@@ -1,0 +1,67 @@
+name: collect
+
+on:
+  schedule:
+    # Not on :00/:15/:30/:45 — GitHub's scheduler is busiest at the top of the hour and
+    # delays those runs most. Each run still lands in its own 15-minute window.
+    - cron: "4,19,34,49 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Two runs must never push to the data branch at the same time. A run that starts while
+# another is going waits instead of being cancelled.
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # The data branch is checked out into data/, which is exactly where the collector
+      # writes (config.DATA_DIR), so new files land straight in that branch.
+      - uses: actions/checkout@v7
+        with:
+          ref: data
+          path: data
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - run: python -m collector.run
+
+      - name: Commit new data
+        working-directory: data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "nothing new"
+            exit 0
+          fi
+          git commit -m "data $(date -u +%Y-%m-%dT%H:%MZ)"
+
+          # Until the push succeeds the snapshot exists only on this throwaway machine,
+          # so a network hiccup here would lose it. Short fixed steps are enough: one writer,
+          # a few tries, and the next run is only 15 minutes away anyway.
+          for wait in 5 10 15; do
+            if git push; then
+              exit 0
+            fi
+            echo "push failed, retrying in ${wait}s"
+            sleep "$wait"
+            # Steps run with bash -e, so a failed pull would end the step and skip the
+            # remaining tries. "|| true" lets the next push attempt decide instead.
+            git pull --rebase || true
+          done
+          git push || { echo "push failed 4 times, this window's snapshot is lost"; exit 1; }
