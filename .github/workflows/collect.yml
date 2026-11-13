@@ -39,7 +39,10 @@ jobs:
 
       - run: python -m collector.run
 
+      # Runs even if the collector step failed: a crash after the snapshot was written
+      # (in maintenance, say) must not throw that snapshot away with the machine.
       - name: Commit new data
+        if: ${{ !cancelled() }}
         working-directory: data
         run: |
           git config user.name "github-actions[bot]"

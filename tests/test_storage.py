@@ -16,6 +16,7 @@ def small_snapshot(bikes):
             "station_id": ["1", "2", "3"],
             "num_vehicles_available": [bikes, 0, 7],
             "num_docks_available": [10, 15, 3],
+            "is_renting": [True, True, False],
         }
     )
 

@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from collector.config import DATA_DIR
 from collector.fetch import SchemaError, fetch_feeds, info_frame, status_frame
 from collector.http import HttpClient, HttpError
-from collector.storage import write_snapshot, write_stations
+from collector.storage import maintain, write_snapshot, write_stations
 
 log = logging.getLogger("collector")
 
@@ -18,6 +18,10 @@ def run(client, data_dir, now):
 
     for station_id, reason in info.rejected + status.rejected:
         log.warning("skipped station %s: %s", station_id, reason)
+
+    # After the snapshot is safely written, so a maintenance problem cannot cost us this window.
+    for day in maintain(now, data_dir):
+        log.info("removed raw snapshots for %s (hourly roll-up kept)", day)
     return path
 
 
