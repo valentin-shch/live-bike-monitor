@@ -1,0 +1,36 @@
+name: squash data history
+
+on:
+  schedule:
+    # Sunday 03:37 UTC: between the :34 and :49 collections, at the quietest hour.
+    - cron: "37 3 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Same group as collect, so the history is never replaced while a collection is pushing.
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  squash:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: data
+
+      # Retention deletes old files, but git keeps them inside old commits forever.
+      # The files are the record, not the history of how they arrived, so once a week
+      # the branch is replaced by a single commit holding only what exists now.
+      - name: Replace history with one commit of the current files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan fresh
+          git add -A
+          git commit -m "data as of $(date -u +%Y-%m-%d)"
+          git push --force origin fresh:data
