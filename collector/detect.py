@@ -27,10 +27,16 @@ def classify(snapshots):
 def feed_checks(snapshots, lookback=MISSING_LOOKBACK):
     """One row per window for each feed-level check, in the same shape as station states,
     so the same debounce turns them into episodes."""
-    clock = snapshots.groupby("window_utc")["feed_last_updated"].max().sort_index()
-    # A quiet night repeats the station numbers but the feed's own clock still moves.
-    # A frozen feed repeats its clock. The first window has nothing to compare with (NaT -> False).
-    stale = clock.le(clock.shift())
+    per_window = snapshots.groupby("window_utc").agg(
+        clock=("feed_last_updated", "max"), newest_report=("last_reported", "max")
+    ).sort_index()
+    clock, newest = per_window["clock"], per_window["newest_report"]
+    # A quiet night repeats the station numbers, but the clocks still move. A frozen feed
+    # repeats them. Two clocks, because Bicing's last_updated looks stamped at request time
+    # (ttl 0, within a minute of our fetch): it could keep moving over frozen data, while the
+    # newest station report could not. Assumes both move more often than every 15 minutes.
+    # The first window has nothing to compare with (NaT -> False).
+    stale = clock.le(clock.shift()) | newest.le(newest.shift())
 
     last_seen, missing = {}, []
     for window, ids in snapshots.groupby("window_utc", sort=True)["station_id"]:

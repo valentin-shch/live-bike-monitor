@@ -15,8 +15,8 @@ RETRY_STATUSES = {429, 500, 502, 503, 504}
 
 
 class HttpError(Exception):
-    def __init__(self, url, status, attempts):
-        super().__init__(f"GET {url} failed after {attempts} attempt(s), last status {status}")
+    def __init__(self, url, status, attempts, method="GET"):
+        super().__init__(f"{method} {url} failed after {attempts} attempt(s), last status {status}")
         self.url = url
         self.status = status
         self.attempts = attempts
@@ -68,6 +68,23 @@ class HttpClient:
             self.sleep(wait)
 
         raise HttpError(url, status, attempt)
+
+    def post(self, url, body, headers=None, label=None):
+        """Send body (bytes) once. No retry: a POST that timed out may still have arrived,
+        and sending it again could deliver the message twice. The caller tries again on the
+        next run instead. `label` is what we log and raise, because notifier URLs contain
+        secrets (Telegram's bot token, Slack's whole webhook URL)."""
+        shown = label or url
+        started = time.monotonic()
+        try:
+            response = self.session.post(url, data=body, headers=headers, timeout=self.timeout)
+            status = response.status_code
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            # The exception's own message contains the URL, so only its type is kept.
+            response, status = None, type(exc).__name__
+        log.info("POST %s status=%s duration=%.2fs", shown, status, time.monotonic() - started)
+        if response is None or not response.ok:
+            raise HttpError(shown, status, 1, method="POST")
 
     def _wait_seconds(self, attempt, response):
         retry_after = response.headers.get("Retry-After") if response is not None else None

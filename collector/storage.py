@@ -2,7 +2,7 @@
 import logging
 import os
 import shutil
-from datetime import date, timezone
+from datetime import date, timedelta, timezone
 
 import pandas as pd
 
@@ -70,6 +70,24 @@ def write_events(events, data_dir=DATA_DIR):
     path = events_path(data_dir)
     _write_atomically(events, path)
     return path
+
+
+def alerts_sent_path(data_dir=DATA_DIR):
+    return data_dir / "alerts_sent.parquet"
+
+
+def read_alerts_sent(data_dir=DATA_DIR):
+    path = alerts_sent_path(data_dir)
+    if not path.exists():
+        return pd.DataFrame(columns=["alert_id", "channel", "sent_at"])
+    return pd.read_parquet(path)
+
+
+def write_alerts_sent(sent, now, data_dir=DATA_DIR, keep_days=RAW_RETENTION_DAYS):
+    # Alerts older than ALERT_MAX_AGE are never sent again, so old receipts only take space.
+    # 14 days is plenty to answer "did that message go out?".
+    sent = sent[pd.to_datetime(sent["sent_at"], utc=True) >= now - timedelta(days=keep_days)]
+    _write_atomically(sent, alerts_sent_path(data_dir))
 
 
 def hourly_path(day, data_dir=DATA_DIR):

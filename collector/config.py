@@ -36,6 +36,14 @@ RETIRED_AFTER = timedelta(days=7)
 # expecting it: a station removed for good ends its missing episode a day later.
 MISSING_LOOKBACK = timedelta(hours=24)
 RAW_RETENTION_DAYS = 14
+# Only these become messages. Empty and full happen hundreds of times a day: they belong on
+# the site, not on a phone. Retired is a fact about a dead station, not news.
+ALERT_STATES = frozenset({"offline", "stale", "missing"})
+# Older starts and ends are history, not news. This also stops a first deploy from sending
+# every episode in the file, and gives a failed send about 8 more runs to get through.
+ALERT_MAX_AGE = timedelta(hours=2)
+# Flood guard: a frozen feed that recovers can bring 500 stations back at once.
+MAX_ALERTS_PER_RUN = 10
 
 # A few broken stations are a glitch: skip them and keep the rest. Above 5% (25 of ~500)
 # the feed has most likely changed shape, and we reject the whole snapshot.

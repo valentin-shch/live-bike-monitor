@@ -3,14 +3,19 @@ import logging
 import sys
 from datetime import datetime, timezone
 
+import pandas as pd
+
 from collector.config import DATA_DIR
 from collector.detect import detect_events, merge_events
 from collector.fetch import SchemaError, fetch_feeds, info_frame, status_frame
 from collector.http import HttpClient, HttpError
+from collector.notify import configured_notifiers, pending_alerts, send_alerts
 from collector.storage import (
     maintain,
+    read_alerts_sent,
     read_all_snapshots,
     read_events,
+    write_alerts_sent,
     write_events,
     write_snapshot,
     write_stations,
@@ -36,6 +41,13 @@ def run(client, data_dir, now):
     events = merge_events(read_events(data_dir), detect_events(snapshots), snapshots["window_utc"].min())
     write_events(events, data_dir)
     log.info("events: %d total, %d ongoing", len(events), events["ended_at"].isna().sum())
+
+    notifiers = configured_notifiers(client)
+    if notifiers:
+        sent = read_alerts_sent(data_dir)
+        new = send_alerts(pending_alerts(events, now), notifiers, sent, now)
+        write_alerts_sent(pd.concat([sent, new], ignore_index=True), now, data_dir)
+        log.info("alerts: %d sent via %s", len(new), ", ".join(n.name for n in notifiers))
     return path
 
 

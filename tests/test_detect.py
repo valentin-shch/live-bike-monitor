@@ -170,6 +170,7 @@ def feed_snapshots(windows):
                     "station_id": station_id,
                     "window_utc": START + timedelta(minutes=15 * i),
                     "feed_last_updated": t(clock),
+                    "last_reported": t(clock) - timedelta(minutes=1),
                 }
             )
     return pd.DataFrame(rows)
@@ -193,6 +194,13 @@ def test_clock_that_stops_is_stale():
     snapshots = feed_snapshots([("08:14", ALL), ("08:14", ALL), ("08:14", ALL), ("09:00", ALL)])
 
     assert check_states(snapshots, "freshness") == ["ok", "stale", "stale", "ok"]
+
+
+def test_moving_feed_clock_over_frozen_station_reports_is_stale():
+    snapshots = feed_snapshots([("08:14", ALL), ("08:29", ALL), ("08:44", ALL)])
+    snapshots["last_reported"] = t("08:10")  # no station has reported anything new
+
+    assert check_states(snapshots, "freshness") == ["ok", "stale", "stale"]
 
 
 def test_station_gone_is_missing_until_it_comes_back():
