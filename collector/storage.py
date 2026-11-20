@@ -48,6 +48,30 @@ def read_snapshots(day, data_dir=DATA_DIR):
     return pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
 
 
+def read_all_snapshots(data_dir=DATA_DIR):
+    """Every raw window we still keep (up to 14 days), as one table."""
+    days = [read_snapshots(day, data_dir) for day in raw_days(data_dir)]
+    days = [d for d in days if not d.empty]
+    return pd.concat(days, ignore_index=True) if days else pd.DataFrame()
+
+
+def events_path(data_dir=DATA_DIR):
+    return data_dir / "events.parquet"
+
+
+def read_events(data_dir=DATA_DIR):
+    path = events_path(data_dir)
+    if not path.exists():
+        return pd.DataFrame(columns=["scope", "subject", "state", "started_at", "ended_at"])
+    return pd.read_parquet(path)
+
+
+def write_events(events, data_dir=DATA_DIR):
+    path = events_path(data_dir)
+    _write_atomically(events, path)
+    return path
+
+
 def hourly_path(day, data_dir=DATA_DIR):
     return data_dir / "hourly" / f"{day:%Y-%m-%d}.parquet"
 

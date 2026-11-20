@@ -4,9 +4,17 @@ import sys
 from datetime import datetime, timezone
 
 from collector.config import DATA_DIR
+from collector.detect import detect_events, merge_events
 from collector.fetch import SchemaError, fetch_feeds, info_frame, status_frame
 from collector.http import HttpClient, HttpError
-from collector.storage import maintain, write_snapshot, write_stations
+from collector.storage import (
+    maintain,
+    read_all_snapshots,
+    read_events,
+    write_events,
+    write_snapshot,
+    write_stations,
+)
 
 log = logging.getLogger("collector")
 
@@ -22,6 +30,12 @@ def run(client, data_dir, now):
     # After the snapshot is safely written, so a maintenance problem cannot cost us this window.
     for day in maintain(now, data_dir):
         log.info("removed raw snapshots for %s (hourly roll-up kept)", day)
+
+    # Recompute every episode from the raw days we keep, then add the older history from the file.
+    snapshots = read_all_snapshots(data_dir)
+    events = merge_events(read_events(data_dir), detect_events(snapshots), snapshots["window_utc"].min())
+    write_events(events, data_dir)
+    log.info("events: %d total, %d ongoing", len(events), events["ended_at"].isna().sum())
     return path
 
 

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -23,6 +24,17 @@ WINDOW_MINUTES = 15
 # and three would hide most of a short morning-peak shortage.
 MIN_EVENT_SNAPSHOTS = 2
 
+# "Silent" = feed_last_updated - last_reported. In the first real snapshot 95% of stations
+# had reported within 3 minutes and the next group was 5+ hours, so 60 minutes sits in the
+# empty space between normal and silent.
+SILENT_AFTER = timedelta(minutes=60)
+# Separates a station under repair (station 12: 29 hours) from dead ones still listed
+# (10 weeks to 17 months).
+RETIRED_AFTER = timedelta(days=7)
+
+# A station absent now is "missing" only if we saw it during this period. After that we stop
+# expecting it: a station removed for good ends its missing episode a day later.
+MISSING_LOOKBACK = timedelta(hours=24)
 RAW_RETENTION_DAYS = 14
 
 # A few broken stations are a glitch: skip them and keep the rest. Above 5% (25 of ~500)

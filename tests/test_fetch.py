@@ -76,6 +76,13 @@ def test_field_renamed_everywhere_rejects_the_snapshot(status_payload):
         _parse_stations(StationStatus, status_payload, "station_status")
 
 
+def test_empty_station_list_rejects_the_snapshot(status_payload):
+    status_payload["data"]["stations"] = []
+
+    with pytest.raises(SchemaError, match="no stations"):
+        _parse_stations(StationStatus, status_payload, "station_status")
+
+
 def test_removing_a_field_we_do_not_use_changes_nothing(status_payload):
     for station in status_payload["data"]["stations"]:
         del station["num_vehicles_disabled"]

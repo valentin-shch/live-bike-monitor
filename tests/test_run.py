@@ -1,11 +1,11 @@
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
 
 from collector import run as run_module
 from collector.http import HttpError
-from collector.storage import read_snapshots
+from collector.storage import read_events, read_snapshots
 
 FIXTURES = Path(__file__).parent / "fixtures"
 NOW = datetime(2026, 11, 12, 1, 43, tzinfo=timezone.utc)
@@ -27,6 +27,18 @@ def test_run_writes_snapshot_and_stations(make_client, tmp_path):
     assert len(read_snapshots(date(2026, 11, 12), tmp_path)) == 504
     stations = pd.read_parquet(tmp_path / "stations" / "2026-11-12.parquet")
     assert len(stations) == 504
+
+
+def test_two_runs_save_the_confirmed_station_events(make_client, tmp_path):
+    for minutes in (0, 15):
+        client, adapter, sleeps = make_client(recorded_feeds())
+        run_module.run(client, tmp_path, NOW + timedelta(minutes=minutes))
+
+    events = read_events(tmp_path)
+
+    retired = events[events["state"] == "retired"]
+    assert sorted(retired["subject"], key=int) == ["56", "245", "323", "366"]
+    assert events["ended_at"].isna().all()  # nothing has recovered yet
 
 
 def test_main_exits_with_1_when_the_feed_is_down(monkeypatch):

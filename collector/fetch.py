@@ -118,6 +118,10 @@ def _parse(model, payload, feed_name):
 def _parse_stations(model, payload, feed_name):
     envelope = _parse(Envelope, payload, feed_name)
     raw_stations = envelope.data.stations
+    # An empty list would pass the 5% rule (0 bad of 0) and store a snapshot with no rows,
+    # which leaves no trace for detection. A city with zero stations is a broken feed.
+    if not raw_stations:
+        raise SchemaError(f"{feed_name}: no stations in the feed")
 
     good, rejected = [], []
     for raw in raw_stations:
