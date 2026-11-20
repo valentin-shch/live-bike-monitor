@@ -36,7 +36,7 @@ class FakeNotifier:
     def __init__(self, name="fake", fail_after=None):
         self.name, self.fail_after, self.texts = name, fail_after, []
 
-    def send(self, text):
+    def send(self, text, event=None):
         if self.fail_after is not None and len(self.texts) >= self.fail_after:
             raise HttpError("fake channel", 503, 1, method="POST")
         self.texts.append(text)
