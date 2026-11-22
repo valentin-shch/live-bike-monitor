@@ -6,13 +6,18 @@ import pandas as pd
 import pytest
 
 from pages.build import (
+    api_reference,
     build,
+    empty_heatmap,
     event_cards,
     format_duration,
+    health_section,
     local_time,
+    rules,
     safe_json,
     status,
     timelapse,
+    type_label,
 )
 
 NOW = datetime(2026, 11, 12, 9, 55, tzinfo=timezone.utc)  # 10:55 in Madrid
@@ -166,3 +171,91 @@ def test_build_embeds_data_the_script_can_read(tmp_path, monkeypatch):
     assert len(embedded["windows"]) == 2
     assert len(embedded["stations"]) == len(embedded["states"]) == len(embedded["bikes"])
     assert "working stations have no bikes" in html
+
+
+# ---------- patterns heatmap ----------
+
+def hourly_rows(rows):
+    """rows: (UTC timestamp, empty_share, renting_share)."""
+    return pd.DataFrame(
+        [{"hour_utc": pd.Timestamp(t), "station_id": "1", "empty_share": e, "renting_share": r} for t, e, r in rows]
+    )
+
+
+def test_heatmap_title_states_the_peak_in_madrid_time():
+    wed_8utc = datetime(2026, 11, 11, 8, 0, tzinfo=timezone.utc)  # Wednesday 09:00 in Madrid
+    heat = empty_heatmap(
+        hourly_rows(
+            [
+                (wed_8utc, 0.30, 1.0),
+                (wed_8utc + timedelta(hours=5), 0.05, 1.0),
+                (wed_8utc + timedelta(hours=1), 0.90, 0.5),  # not renting all hour: left out
+            ]
+        )
+    )
+
+    assert heat["title"] == "Stations run dry most on Wednesdays around 09:00"
+    assert heat["caption"].startswith("30% of working stations empty then, against 5% on Wednesdays at 14:00.")
+    assert "hint, not proof" in heat["caption"]
+    assert heat["z"][2][9] == 30.0 and heat["z"][2][10] is None
+
+
+def test_no_history_no_heatmap():
+    assert empty_heatmap(pd.DataFrame()) is None
+
+
+# ---------- collector health ----------
+
+def test_health_strips_gaps_and_lateness():
+    from collector.monitor import RUN_COLUMNS
+
+    start = datetime(2026, 11, 12, 8, 0, tzinfo=timezone.utc)  # 09:00 Madrid
+    runs = pd.DataFrame(
+        [
+            {"started_at": start + timedelta(minutes=4), "window_utc": start, "outcome": "ok"},
+            # 08:15 and 08:30 UTC: nothing ran
+            {"started_at": start + timedelta(minutes=55), "window_utc": start + timedelta(minutes=45), "outcome": "feed_down"},
+            {"started_at": start + timedelta(minutes=70), "window_utc": start + timedelta(minutes=60), "outcome": "ok"},
+        ],
+        columns=RUN_COLUMNS,
+    )
+
+    health = health_section(runs, events(), start + timedelta(minutes=65))
+
+    strip = health["strips"][0]
+    assert strip["cells"][36:41] == ["o", "m", "m", "f", "o"]  # 09:00 Madrid is slot 36
+    assert (strip["ok"], strip["expected"]) == (2, 5)
+    assert health["gaps"][0]["when"] == "09:15–10:00"
+    assert health["gaps"][0]["reasons"] == "2 missed, 1 failed"
+    assert health["late_median"] == 3  # 0 and 6 minutes late
+
+
+# ---------- API reference ----------
+
+def test_type_labels_and_rules_from_openapi():
+    optional_enum = {"anyOf": [{"enum": ["ok", "empty"], "type": "string"}, {"type": "null"}]}
+
+    assert type_label(optional_enum) == "ok | empty"
+    assert type_label({"type": "string", "format": "date-time"}) == "date-time"
+    assert rules({"type": "integer", "minimum": 1, "maximum": 200}) == "1–200"
+
+
+def test_api_reference_uses_saved_samples_when_present(tmp_path):
+    from api.export import openapi_text
+
+    (tmp_path / "health.json").write_text('{"status": "ok", "data": "fresh"}', encoding="utf-8")
+
+    reference = api_reference(json.loads(openapi_text()), tmp_path)
+
+    by_path = {e["path"]: e for e in reference["endpoints"]}
+    assert by_path["/health"]["sample"] == '{\n  "status": "ok",\n  "data": "fresh"\n}'
+    assert by_path["/stations"]["sample"] is None  # not saved yet: no invented example
+    assert by_path["/stations/{station_id}"]["curl"] == 'curl "http://localhost:8000/stations/12"'
+    assert [p["name"] for p in by_path["/events"]["params"]] == ["type", "station", "since", "limit", "offset"]
+
+
+def test_build_writes_the_api_page_and_openapi_file(tmp_path):
+    build(tmp_path / "data", tmp_path / "site", now=NOW)
+
+    assert "GET" in (tmp_path / "site" / "api.html").read_text(encoding="utf-8")
+    assert json.loads((tmp_path / "site" / "openapi.json").read_text(encoding="utf-8"))["openapi"]

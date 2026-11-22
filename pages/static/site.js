@@ -39,7 +39,36 @@
   checkAge();
   setInterval(checkAge, 60000);
 
-  // ---------- 2. the time-lapse map ----------
+  // ---------- 2. patterns: weekday x hour heatmap ----------
+  const heat = data.heatmap;
+  if (heat && window.Plotly) {
+    const hours = Array.from({ length: 24 }, (_, h) => h);
+    Plotly.newPlot(
+      "heatmap",
+      [{
+        type: "heatmap", z: heat.z, x: hours, y: heat.weekdays,
+        // Dark = few empty, red = many: the same red as "empty" on the map.
+        colorscale: [[0, color("--surface")], [1, color("--empty")]],
+        zmin: 0, zmax: heat.max, showscale: false, xgap: 1, ygap: 1, hoverinfo: "none",
+      }],
+      {
+        paper_bgcolor: color("--bg"), plot_bgcolor: color("--bg"),
+        margin: { l: 36, r: 4, t: 4, b: 28 },
+        font: { family: css.getPropertyValue("--mono"), color: color("--muted"), size: 13 },
+        xaxis: { tickvals: [0, 6, 12, 18, 23], ticktext: ["00", "06", "12", "18", "23h"], fixedrange: true },
+        yaxis: { autorange: "reversed", fixedrange: true },  // Monday on top, like a calendar
+        // The peak is written on the chart, not hidden in a hover.
+        annotations: [{
+          x: heat.peak.hour, y: heat.weekdays[heat.peak.weekday], text: heat.peak.value + "%",
+          showarrow: true, arrowcolor: color("--text"), ax: 0, ay: -22,
+          font: { color: color("--text"), size: 13 }, bgcolor: color("--bg"),
+        }],
+      },
+      { responsive: true, displayModeBar: false, staticPlot: true }
+    );
+  }
+
+  // ---------- 3. the time-lapse map ----------
   if (!data.windows || !data.windows.length || !window.Plotly) return;
   const stations = data.stations;
   const last = data.windows.length - 1;
@@ -101,7 +130,7 @@
   });
   scrub.addEventListener("input", () => { stop(); showFrame(Number(scrub.value)); });
 
-  // ---------- 3. tap a station: its last 24 hours ----------
+  // ---------- 4. tap a station: its last 24 hours ----------
   function sparkline(bikes, capacity) {
     const top = Math.max(capacity || 0, ...bikes.filter((b) => b !== null), 1);
     const w = bikes.length - 1 || 1;

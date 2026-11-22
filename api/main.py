@@ -12,7 +12,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import AwareDatetime
 
-from api.data import Repository, as_records, station_order
+from api.data import Repository, as_records, renting_hours, station_order
 from api.models import (
     EmptyByHour,
     Event,
@@ -151,11 +151,7 @@ def create_app(data_dir=None, clock=lambda: datetime.now(timezone.utc)):
         if hourly.empty:
             return EmptyByHour(timezone=DISPLAY_TZ, days=0, first_day=None, last_day=None,
                                hours=empty_hours)
-        # Only station-hours that were renting the whole hour: a closed station with 0 bikes
-        # is not "empty" for a rider (the stage 1 denominator lesson).
-        renting = hourly[hourly["renting_share"] == 1]
-        local_hour = renting["hour_utc"].dt.tz_convert(DISPLAY_TZ).dt.hour
-        stats = renting.groupby(local_hour)["empty_share"].agg(["mean", "count"])
+        stats = renting_hours(hourly).groupby("local_hour")["empty_share"].agg(["mean", "count"])
         days = hourly["hour_utc"].dt.date
         return EmptyByHour(
             timezone=DISPLAY_TZ,

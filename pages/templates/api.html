@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API reference — Bicing live</title>
+  <meta name="description" content="Read-only API over Barcelona Bicing station history: endpoints, parameters, status codes and real sample responses.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="status">
+  <p class="meta"><a href="./">← Back to the status page</a></p>
+  <h1>{{ title }} <span class="num meta">v{{ version }}</span></h1>
+  <p class="why">
+    A small read-only API over the same files as this page. It runs locally with uvicorn, not on
+    this site. GET only; every answer is JSON. Generated from the code's own
+    <a href="openapi.json">OpenAPI document</a>.
+  </p>
+</header>
+
+<main>
+  {% for e in endpoints %}
+  <section class="endpoint" aria-labelledby="ep-{{ loop.index }}">
+    <h2 id="ep-{{ loop.index }}"><span class="method num">{{ e.method }}</span> <code>{{ e.path }}</code></h2>
+    <p>{{ e.summary }}</p>
+
+    {% if e.params %}
+    <ul class="params">
+      {% for p in e.params %}
+      <li>
+        <code>{{ p.name }}</code>
+        <span class="meta">{{ p.where }} · {{ p.type }}{% if p.rules %} · {{ p.rules }}{% endif %}{% if p.required %} · required{% endif %}</span>
+        {% if p.description %}<span class="param-desc">{{ p.description }}</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <p class="codes">
+      {% for code, text in e.responses %}<span class="code-chip num" title="{{ text }}">{{ code }}</span> {{ text }}{% if not loop.last %} · {% endif %}{% endfor %}
+    </p>
+
+    <pre class="snippet"><code>{{ e.curl }}</code></pre>
+    {% if e.sample %}
+    <details>
+      <summary>Sample response, from a real local run</summary>
+      <pre class="snippet"><code>{{ e.sample }}</code></pre>
+    </details>
+    {% endif %}
+  </section>
+  {% endfor %}
+</main>
+
+<footer>
+  <p>Built <span class="num">{{ built_local }}</span> Madrid time.</p>
+  <p>Station data: Bicing, Ajuntament de Barcelona.</p>
+</footer>
+</body>
+</html>

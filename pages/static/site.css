@@ -110,3 +110,43 @@ h2 { font-size: 1.2rem; margin: 32px 0 12px; }
 @media (min-width: 768px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 footer { color: var(--muted); font-size: 14px; padding-top: 24px; padding-bottom: 32px; }
+
+/* ---------- patterns heatmap ---------- */
+.caption { color: var(--muted); margin: -4px 0 12px; }
+.heatmap { width: 100%; aspect-ratio: 4 / 3; }
+@media (min-width: 768px) { .heatmap { aspect-ratio: 24 / 9; } }
+.scale { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.scale-bar { flex: 0 1 160px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--surface), var(--empty)); }
+
+/* ---------- collector health ---------- */
+h3 { font-size: 1rem; margin: 20px 0 8px; }
+.strips { display: grid; gap: 4px; }
+.strip-row { display: grid; grid-template-columns: 4.2em 1fr 3.8em; align-items: center; gap: 8px; font-size: 13px; }
+.strip-label { color: var(--muted); }
+.strip-count { text-align: right; }
+/* 96 slots per day: thin on a phone, but each day stays one readable line. */
+.strip { display: grid; grid-template-columns: repeat(96, 1fr); gap: 1px; height: 14px; }
+.strip i, .key i { display: block; border-radius: 1px; }
+.key { display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 13px; }
+.key i { display: inline-block; width: 10px; height: 10px; margin-right: 4px; vertical-align: -1px; }
+.c-o { background: var(--ok); opacity: 0.55; }
+.c-f { background: var(--empty); }
+.c-m { background: var(--full); }
+.c-n { background: transparent; }
+.plain { margin: 0; padding-left: 1.1em; }
+.plain li { margin: 4px 0; }
+
+/* ---------- API reference ---------- */
+.endpoint { border-top: 1px solid var(--line); padding-top: 4px; margin-top: 24px; }
+.endpoint h2 { margin: 16px 0 4px; font-size: 1.1rem; overflow-wrap: anywhere; }
+.method { color: var(--ok); margin-right: 6px; }
+.params { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 8px; }
+.params li { display: grid; gap: 2px; }
+.param-desc { color: var(--muted); font-size: 15px; }
+.codes { font-size: 15px; color: var(--muted); }
+.code-chip { color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.snippet {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; overflow-x: auto; font-size: 13px; margin: 8px 0;
+}
+details summary { cursor: pointer; color: var(--muted); min-height: 44px; display: flex; align-items: center; }

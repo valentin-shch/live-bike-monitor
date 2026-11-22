@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import pandas as pd
 
+from collector.config import DISPLAY_TZ
 from collector.detect import classify
 from collector.storage import read_events, read_snapshots
 
@@ -11,6 +12,18 @@ from collector.storage import read_events, read_snapshots
 def station_order(ids):
     """Sort key: numeric ids as numbers (2 before 10), so pages are stable and readable."""
     return pd.to_numeric(ids, errors="coerce")
+
+
+def renting_hours(hourly, tz=DISPLAY_TZ):
+    """Station-hours that were renting the WHOLE hour, with Madrid weekday and hour added.
+
+    A closed station with 0 bikes is not "empty" for a rider (the stage 1 denominator
+    lesson). The API's empty-by-hour and the site's heatmap both start here, so they
+    can never disagree about the same hour.
+    """
+    renting = hourly[hourly["renting_share"] == 1]
+    local = renting["hour_utc"].dt.tz_convert(tz)
+    return renting.assign(local_hour=local.dt.hour, weekday=local.dt.day_of_week, local_day=local.dt.date)
 
 
 def as_records(frame):

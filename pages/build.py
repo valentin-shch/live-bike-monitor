@@ -13,13 +13,14 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from plotly.offline import get_plotlyjs
 
-from api.data import Repository, station_order
+from api.data import Repository, renting_hours, station_order
 from collector.config import DATA_DIR, DISPLAY_TZ, FRESH_FOR, REPO_ROOT
 from collector.monitor import coverage, read_runs, window_report
 from collector.storage import window_start
 
 HERE = Path(__file__).parent
 OUT_DIR = REPO_ROOT / "_site"
+API_DIR = REPO_ROOT / "api"
 TZ = ZoneInfo(DISPLAY_TZ)
 UPTIME_DAYS = 7
 MAX_CARDS = 40
@@ -195,6 +196,166 @@ def headline(snapshot):
     }
 
 
+WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+def empty_heatmap(hourly):
+    """Share of working stations empty, by Madrid weekday (rows) and hour (columns).
+
+    The title states the finding (the peak), and the caption says how many days each
+    weekday rests on: with a few weeks of data, one odd Tuesday moves a whole row.
+    """
+    if hourly.empty:
+        return None
+    rows = renting_hours(hourly)
+    if rows.empty:
+        return None
+    grid = rows.pivot_table(index="weekday", columns="local_hour", values="empty_share", aggfunc="mean")
+    grid = grid.reindex(index=range(7), columns=range(24))
+    days = rows.groupby("weekday")["local_day"].nunique().reindex(range(7), fill_value=0)
+
+    cells = grid.stack().dropna()
+    (peak_day, peak_hour), peak = cells.idxmax(), cells.max()
+    (low_day, low_hour), low = cells.idxmin(), cells.min()
+    covered = days[days > 0]
+    return {
+        "title": f"Stations run dry most on {WEEKDAYS[peak_day]}s around {peak_hour:02d}:00",
+        "caption": (
+            f"{peak:.0%} of working stations empty then, against {low:.0%} on "
+            f"{WEEKDAYS[low_day]}s at {low_hour:02d}:00. "
+            f"Based on {rows['local_day'].nunique()} days: each weekday rests on "
+            f"{covered.min()}–{covered.max()} of them, so this is a hint, not proof."
+        ),
+        "z": [[None if pd.isna(v) else round(float(v) * 100, 1) for v in row] for row in grid.to_numpy()],
+        "weekdays": [d[:3] for d in WEEKDAYS],
+        "peak": {"weekday": int(peak_day), "hour": int(peak_hour), "value": round(float(peak) * 100, 1)},
+        "max": round(float(peak) * 100, 1),
+    }
+
+
+def health_section(runs, events, now, days=UPTIME_DAYS):
+    """Expected vs actual runs, the gaps, how late GitHub starts us, and feed incidents."""
+    if runs.empty:
+        return None
+    end = window_start(now)
+    start = max(window_start(now - timedelta(days=days)), runs["window_utc"].min())
+    report = window_report(runs, start, end)
+    local = report["window_utc"].dt.tz_convert(TZ)
+    report = report.assign(local_day=local.dt.date, slot=local.dt.hour * 4 + local.dt.minute // 15)
+
+    letters = {"ok": "o", "failed": "f", "missed": "m"}
+    strips = []
+    for day, rows in report.groupby("local_day"):
+        # 96 slots per Madrid day, placed by clock time, so a partial first day lines up.
+        # On the two daylight-saving days a slot can hold two windows; the later one shows.
+        cells = ["n"] * 96
+        for slot, status_ in zip(rows["slot"], rows["status"]):
+            cells[slot] = letters[status_]
+        ok = int((rows["status"] == "ok").sum())
+        strips.append({"label": pd.Timestamp(day).strftime("%a %d"), "cells": cells, "ok": ok, "expected": len(rows)})
+
+    # Gaps: runs of consecutive windows that were not collected.
+    bad = report["status"] != "ok"
+    gap_id = (bad != bad.shift()).cumsum()
+    gaps = []
+    for _, rows in report[bad].groupby(gap_id[bad]):
+        first, last = rows["window_utc"].iloc[0], rows["window_utc"].iloc[-1]
+        missed, failed = int((rows["status"] == "missed").sum()), int((rows["status"] == "failed").sum())
+        reasons = ", ".join(p for p in (f"{missed} missed" if missed else "", f"{failed} failed" if failed else "") if p)
+        gaps.append(
+            {
+                "when": f"{local_time(first.to_pydatetime(), now)}–{local_time((last + timedelta(minutes=15)).to_pydatetime(), now)}",
+                "windows": len(rows),
+                "reasons": reasons,
+                "start": first,
+            }
+        )
+    gaps = sorted(gaps, key=lambda g: (g["windows"], g["start"]), reverse=True)[:5]
+
+    # Cron says :04, :19, :34, :49, so a run 4 minutes into its window is on time.
+    late = (report.loc[report["status"] == "ok", "delay_min"] - 4).clip(lower=0)
+    incidents, more = event_cards(events[events["scope"] == "feed"], {}, now, window=timedelta(days=days), limit=10)
+    counts = coverage(report)
+    return {
+        "strips": strips,
+        "gaps": gaps,
+        "counts": counts,
+        "late_median": None if late.empty else round(float(late.median())),
+        "late_p90": None if late.empty else round(float(late.quantile(0.9))),
+        "incidents": incidents,
+        "more_incidents": more,
+    }
+
+
+# ---------- the API reference page ----------
+
+# One real request per endpoint; the answers are saved from a local run into api/examples/.
+EXAMPLES = {
+    "/health": ("/health", "health.json"),
+    "/stations": ("/stations?state=empty&limit=5", "stations_empty.json"),
+    "/stations/{station_id}": ("/stations/12", "station_12.json"),
+    "/events": ("/events?type=missing&limit=5", "events_missing.json"),
+    "/stats/empty-by-hour": ("/stats/empty-by-hour", "empty_by_hour.json"),
+}
+SAMPLE_LINES = 40
+
+
+def type_label(schema):
+    """A short human type for a parameter, from its OpenAPI schema."""
+    if "anyOf" in schema:
+        return " or ".join(type_label(s) for s in schema["anyOf"] if s.get("type") != "null")
+    if "$ref" in schema:
+        return schema["$ref"].rsplit("/", 1)[-1]
+    if "enum" in schema:
+        return " | ".join(str(v) for v in schema["enum"])
+    return schema.get("format", schema.get("type", "any"))
+
+
+def rules(schema):
+    low, high = schema.get("minimum"), schema.get("maximum")
+    if low is not None and high is not None:
+        return f"{low}–{high}"
+    if low is not None:
+        return f"≥ {low}"
+    return ""
+
+
+def api_reference(openapi, examples_dir):
+    endpoints = []
+    for path, methods in openapi["paths"].items():
+        for method, op in methods.items():
+            query, sample_file = EXAMPLES.get(path, (path, None))
+            sample = None
+            if sample_file and (examples_dir / sample_file).exists():
+                pretty = json.dumps(
+                    json.loads((examples_dir / sample_file).read_text(encoding="utf-8")),
+                    indent=2, ensure_ascii=False,
+                ).splitlines()
+                sample = "\n".join(pretty[:SAMPLE_LINES] + (["  …"] if len(pretty) > SAMPLE_LINES else []))
+            endpoints.append(
+                {
+                    "method": method.upper(),
+                    "path": path,
+                    "summary": op.get("summary", ""),
+                    "params": [
+                        {
+                            "name": p["name"],
+                            "where": p["in"],
+                            "type": type_label(p["schema"]),
+                            "rules": rules(p["schema"]),
+                            "required": p.get("required", False),
+                            "description": p.get("description", p["schema"].get("description", "")),
+                        }
+                        for p in op.get("parameters", [])
+                    ],
+                    "responses": [(code, r.get("description", "")) for code, r in op["responses"].items()],
+                    "curl": f'curl "http://localhost:8000{query}"',
+                    "sample": sample,
+                }
+            )
+    return {"title": openapi["info"]["title"], "version": openapi["info"]["version"], "endpoints": endpoints}
+
+
 # ---------- putting it together ----------
 
 def safe_json(value):
@@ -217,30 +378,40 @@ def site_context(data_dir, now):
         data.update(timelapse(found[0], info))
     head = status(snapshot, events, runs, now)
     data["last_fetch_utc"] = head["last_fetch_utc"]
+    heatmap = empty_heatmap(repo.hourly())
+    data["heatmap"] = heatmap
     cards, more = event_cards(events, names, now)
     return {
         "status": head,
         "headline": headline(snapshot),
         "cards": cards,
         "more_cards": more,
+        "heatmap": heatmap,
+        "health": health_section(runs, events, now),
         "built_local": local_time(now, now),
         "data_json": safe_json(data),
     }
 
 
-def render(context):
+def render(template, context):
     env = Environment(
         loader=FileSystemLoader(HERE / "templates"),
         # Every value is HTML-escaped unless marked safe: a station called "<b>" stays text.
         autoescape=select_autoescape(["html"]),
     )
-    return env.get_template("index.html").render(**context)
+    return env.get_template(template).render(**context)
 
 
-def build(data_dir=DATA_DIR, out_dir=OUT_DIR, now=None):
+def build(data_dir=DATA_DIR, out_dir=OUT_DIR, now=None, api_dir=API_DIR):
     now = now or datetime.now(timezone.utc)
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "index.html").write_text(render(site_context(data_dir, now)), encoding="utf-8")
+    (out_dir / "index.html").write_text(render("index.html", site_context(data_dir, now)), encoding="utf-8")
+
+    openapi = json.loads((api_dir / "openapi.json").read_text(encoding="utf-8"))
+    reference = api_reference(openapi, api_dir / "examples")
+    (out_dir / "api.html").write_text(render("api.html", {**reference, "built_local": local_time(now, now)}), encoding="utf-8")
+    shutil.copy(api_dir / "openapi.json", out_dir / "openapi.json")
+
     for asset in ("site.css", "site.js"):
         shutil.copy(HERE / "static" / asset, out_dir / asset)
     # Served from our own site: same version as the Python package, and no third-party

@@ -77,10 +77,68 @@
     <p class="hint">Nothing changed in the last 24 hours.</p>
     {% endif %}
   </section>
+
+  <section aria-labelledby="patterns-title">
+    {% if heatmap %}
+    <h2 id="patterns-title">{{ heatmap.title }}</h2>
+    <p class="caption">{{ heatmap.caption }}</p>
+    <div id="heatmap" class="heatmap" role="img" aria-label="{{ heatmap.title }}"></div>
+    <div class="scale" aria-hidden="true">
+      <span class="num">0%</span><i class="scale-bar"></i><span class="num">{{ "%.0f" | format(heatmap.max) }}% empty</span>
+    </div>
+    {% else %}
+    <h2 id="patterns-title">When does the city run out of bikes?</h2>
+    <p class="hint">Patterns appear after the first full day of data.</p>
+    {% endif %}
+  </section>
+
+  {% if health %}
+  <section aria-labelledby="health-title">
+    <h2 id="health-title">Collector health: {{ health.counts.ok }} of {{ health.counts.expected }} windows collected</h2>
+    <p class="caption">
+      Every 15 minutes a scheduled job should collect one snapshot. GitHub's scheduler is
+      best-effort, so some runs start late or never start.
+      {% if health.late_median is not none %}Runs started a median of <span class="num">{{ health.late_median }}</span> min
+      late (<span class="num">{{ health.late_p90 }}</span> min for the slowest tenth).{% endif %}
+    </p>
+    <div class="strips">
+      {% for strip in health.strips %}
+      <div class="strip-row">
+        <span class="strip-label num">{{ strip.label }}</span>
+        <span class="strip" aria-hidden="true">{% for c in strip.cells %}<i class="c-{{ c }}"></i>{% endfor %}</span>
+        <span class="strip-count num">{{ strip.ok }}/{{ strip.expected }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="key"><i class="c-o"></i>collected <i class="c-f"></i>failed <i class="c-m"></i>no run</p>
+
+    {% if health.gaps %}
+    <h3>Longest gaps</h3>
+    <ul class="plain">
+      {% for gap in health.gaps %}
+      <li><span class="num">{{ gap.when }}</span> · {{ gap.windows }} window{{ "s" if gap.windows > 1 }} ({{ gap.reasons }})</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h3>Feed incidents, last 7 days</h3>
+    {% if health.incidents %}
+    <ul class="plain">
+      {% for card in health.incidents %}
+      <li>{{ card.text }} <span class="num duration">({{ card.duration }})</span></li>
+      {% endfor %}
+    </ul>
+    {% if health.more_incidents %}<p class="more">…and {{ health.more_incidents }} more.</p>{% endif %}
+    {% else %}
+    <p class="hint">None: the feed answered, kept its shape and kept updating.</p>
+    {% endif %}
+  </section>
+  {% endif %}
 </main>
 
 <footer>
   <p>Built <span class="num">{{ built_local }}</span> Madrid time. Times are Madrid time.</p>
+  <p>The same history is served by a small read-only API: <a href="api.html">API reference</a>.</p>
   <p>Station data: Bicing, Ajuntament de Barcelona. Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.</p>
 </footer>
 
