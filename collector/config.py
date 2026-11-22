@@ -38,7 +38,7 @@ MISSING_LOOKBACK = timedelta(hours=24)
 RAW_RETENTION_DAYS = 14
 # Only these become messages. Empty and full happen hundreds of times a day: they belong on
 # the site, not on a phone. Retired is a fact about a dead station, not news.
-ALERT_STATES = frozenset({"offline", "stale", "missing"})
+ALERT_STATES = frozenset({"offline", "stale", "missing", "feed_down", "schema_error", "crashed"})
 # Older starts and ends are history, not news. This also stops a first deploy from sending
 # every episode in the file, and gives a failed send about 8 more runs to get through.
 ALERT_MAX_AGE = timedelta(hours=2)

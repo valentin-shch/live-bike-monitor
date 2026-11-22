@@ -37,7 +37,17 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - run: python -m collector.run
+      # All optional. A secret that is not set arrives as an empty string, and the collector
+      # treats empty as "channel off", so nothing breaks before the secrets exist.
+      # Only this step sees them; checkout, pip and the commit step do not.
+      - name: Collect
+        run: python -m collector.run
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
 
       # Runs even if the collector step failed: a crash after the snapshot was written
       # (in maintenance, say) must not throw that snapshot away with the machine.

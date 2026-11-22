@@ -30,14 +30,14 @@ def write_snapshot(frame, fetched_at, data_dir=DATA_DIR):
     so the window is a natural key and duplicates cannot happen."""
     window = window_start(fetched_at)
     path = snapshot_path(window, data_dir)
-    _write_atomically(frame.assign(window_utc=window), path)
+    write_atomically(frame.assign(window_utc=window), path)
     return path
 
 
 def write_stations(frame, fetched_at, data_dir=DATA_DIR):
     day = window_start(fetched_at)
     path = data_dir / "stations" / f"{day:%Y-%m-%d}.parquet"
-    _write_atomically(frame, path)
+    write_atomically(frame, path)
     return path
 
 
@@ -68,7 +68,7 @@ def read_events(data_dir=DATA_DIR):
 
 def write_events(events, data_dir=DATA_DIR):
     path = events_path(data_dir)
-    _write_atomically(events, path)
+    write_atomically(events, path)
     return path
 
 
@@ -87,7 +87,7 @@ def write_alerts_sent(sent, now, data_dir=DATA_DIR, keep_days=RAW_RETENTION_DAYS
     # Alerts older than ALERT_MAX_AGE are never sent again, so old receipts only take space.
     # 14 days is plenty to answer "did that message go out?".
     sent = sent[pd.to_datetime(sent["sent_at"], utc=True) >= now - timedelta(days=keep_days)]
-    _write_atomically(sent, alerts_sent_path(data_dir))
+    write_atomically(sent, alerts_sent_path(data_dir))
 
 
 def hourly_path(day, data_dir=DATA_DIR):
@@ -116,7 +116,7 @@ def roll_up_day(day, data_dir=DATA_DIR):
         renting_share=("is_renting", "mean"),
     )
     path = hourly_path(day, data_dir)
-    _write_atomically(hourly, path)
+    write_atomically(hourly, path)
     return path
 
 
@@ -151,7 +151,7 @@ def maintain(now, data_dir=DATA_DIR):
     return apply_retention(today, data_dir)
 
 
-def _write_atomically(frame, path):
+def write_atomically(frame, path):
     # Write beside the target, then rename in one step. A job killed mid-write leaves
     # a stray .tmp that readers ignore, never a half-written .parquet.
     path.parent.mkdir(parents=True, exist_ok=True)

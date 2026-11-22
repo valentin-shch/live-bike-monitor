@@ -123,6 +123,12 @@ def message(alert, tz=ZoneInfo(DISPLAY_TZ)):
         ("stale", "ended"): f"Feed updating again at {at} (stale since {since})",
         ("missing", "started"): f"Stations missing from the feed since {since}",
         ("missing", "ended"): f"Missing stations back in the feed at {at} (since {since})",
+        ("feed_down", "started"): f"Collection failing since {since}: Bicing feed not answering",
+        ("feed_down", "ended"): f"Collection working again at {at} (feed down since {since})",
+        ("schema_error", "started"): f"Collection failing since {since}: the feed changed shape",
+        ("schema_error", "ended"): f"Collection working again at {at} (feed format broken since {since})",
+        ("crashed", "started"): f"Collector crashing since {since}: a bug, see the Actions log",
+        ("crashed", "ended"): f"Collector working again at {at} (crashing since {since})",
     }
     return texts[(alert.state, alert.kind)]
 
