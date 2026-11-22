@@ -1,0 +1,921 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Live bike monitor API",
+    "description": "Read-only access to Barcelona Bicing station history collected every 15 minutes. Station data: Bicing, Ajuntament de Barcelona.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Is the API up, and is the data fresh?",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations": {
+      "get": {
+        "summary": "Current state of every station",
+        "operationId": "list_stations_stations_get",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "ok",
+                    "empty",
+                    "full",
+                    "offline",
+                    "retired",
+                    "unknown"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "description": "Items per page",
+              "default": 50,
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Items to skip",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Items to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_Station_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stations/{station_id}": {
+      "get": {
+        "summary": "One station now, plus its last 24 h",
+        "operationId": "get_station_stations__station_id__get",
+        "parameters": [
+          {
+            "name": "station_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Station Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not seen in the last 24 h of data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "Episodes, newest first",
+        "operationId": "list_events_events_get",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "empty",
+                    "full",
+                    "offline",
+                    "retired",
+                    "stale",
+                    "missing",
+                    "feed_down",
+                    "schema_error",
+                    "crashed"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Event state",
+              "title": "Type"
+            },
+            "description": "Event state"
+          },
+          {
+            "name": "station",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only this station's events",
+              "title": "Station"
+            },
+            "description": "Only this station's events"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only episodes still going on at or after this time, with a timezone, e.g. 2026-11-12T08:00Z",
+              "title": "Since"
+            },
+            "description": "Only episodes still going on at or after this time, with a timezone, e.g. 2026-11-12T08:00Z"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "description": "Items per page",
+              "default": 50,
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Items to skip",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Items to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_Event_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/empty-by-hour": {
+      "get": {
+        "summary": "How often stations are empty, by hour of day",
+        "operationId": "empty_by_hour_stats_empty_by_hour_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyByHour"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EmptyByHour": {
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "title": "Timezone"
+          },
+          "days": {
+            "type": "integer",
+            "title": "Days"
+          },
+          "first_day": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Day"
+          },
+          "last_day": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Day"
+          },
+          "hours": {
+            "items": {
+              "$ref": "#/components/schemas/HourShare"
+            },
+            "type": "array",
+            "title": "Hours"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timezone",
+          "days",
+          "first_day",
+          "last_day",
+          "hours"
+        ],
+        "title": "EmptyByHour"
+      },
+      "Event": {
+        "properties": {
+          "scope": {
+            "type": "string",
+            "enum": [
+              "station",
+              "feed"
+            ],
+            "title": "Scope"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject",
+            "description": "Station id, or the feed check: freshness, station_list, collection"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "empty",
+              "full",
+              "offline",
+              "retired",
+              "stale",
+              "missing",
+              "feed_down",
+              "schema_error",
+              "crashed"
+            ],
+            "title": "State"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At",
+            "description": "Missing while the episode is still going on"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scope",
+          "subject",
+          "state",
+          "started_at",
+          "ended_at"
+        ],
+        "title": "Event"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status",
+            "description": "The API itself is answering"
+          },
+          "data": {
+            "type": "string",
+            "enum": [
+              "fresh",
+              "stale",
+              "no_data"
+            ],
+            "title": "Data",
+            "description": "Whether the collector is keeping the data up to date"
+          },
+          "last_snapshot_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Snapshot Utc"
+          },
+          "minutes_since_last_snapshot": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes Since Last Snapshot"
+          },
+          "stations": {
+            "type": "integer",
+            "title": "Stations"
+          },
+          "ongoing_events": {
+            "type": "integer",
+            "title": "Ongoing Events"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "data",
+          "last_snapshot_utc",
+          "minutes_since_last_snapshot",
+          "stations",
+          "ongoing_events"
+        ],
+        "title": "Health"
+      },
+      "HistoryPoint": {
+        "properties": {
+          "window_utc": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Window Utc"
+          },
+          "bikes": {
+            "type": "integer",
+            "title": "Bikes"
+          },
+          "docks": {
+            "type": "integer",
+            "title": "Docks"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "empty",
+              "full",
+              "offline",
+              "retired",
+              "unknown"
+            ],
+            "title": "State"
+          }
+        },
+        "type": "object",
+        "required": [
+          "window_utc",
+          "bikes",
+          "docks",
+          "state"
+        ],
+        "title": "HistoryPoint"
+      },
+      "HourShare": {
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "maximum": 23.0,
+            "minimum": 0.0,
+            "title": "Hour",
+            "description": "Hour of day in Madrid time"
+          },
+          "empty_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Empty Share",
+            "description": "Share of renting station-hours that were empty"
+          },
+          "station_hours": {
+            "type": "integer",
+            "title": "Station Hours"
+          }
+        },
+        "type": "object",
+        "required": [
+          "hour",
+          "empty_share",
+          "station_hours"
+        ],
+        "title": "HourShare"
+      },
+      "Page_Event_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total",
+            "description": "Number of items across all pages"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "Page[Event]"
+      },
+      "Page_Station_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Station"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total",
+            "description": "Number of items across all pages"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "Page[Station]"
+      },
+      "Problem": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "Problem"
+      },
+      "Station": {
+        "properties": {
+          "station_id": {
+            "type": "string",
+            "title": "Station Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          },
+          "capacity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "empty",
+              "full",
+              "offline",
+              "retired",
+              "unknown"
+            ],
+            "title": "State"
+          },
+          "bikes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bikes"
+          },
+          "docks": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Docks"
+          },
+          "last_reported": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Reported"
+          },
+          "as_of_utc": {
+            "type": "string",
+            "format": "date-time",
+            "title": "As Of Utc",
+            "description": "Window of the snapshot these numbers come from"
+          }
+        },
+        "type": "object",
+        "required": [
+          "station_id",
+          "name",
+          "lat",
+          "lon",
+          "capacity",
+          "state",
+          "bikes",
+          "docks",
+          "last_reported",
+          "as_of_utc"
+        ],
+        "title": "Station"
+      },
+      "StationDetail": {
+        "properties": {
+          "station_id": {
+            "type": "string",
+            "title": "Station Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          },
+          "capacity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "empty",
+              "full",
+              "offline",
+              "retired",
+              "unknown"
+            ],
+            "title": "State"
+          },
+          "bikes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bikes"
+          },
+          "docks": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Docks"
+          },
+          "last_reported": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Reported"
+          },
+          "as_of_utc": {
+            "type": "string",
+            "format": "date-time",
+            "title": "As Of Utc",
+            "description": "Window of the snapshot these numbers come from"
+          },
+          "history": {
+            "items": {
+              "$ref": "#/components/schemas/HistoryPoint"
+            },
+            "type": "array",
+            "title": "History",
+            "description": "Every snapshot of the last 24 h of data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "station_id",
+          "name",
+          "lat",
+          "lon",
+          "capacity",
+          "state",
+          "bikes",
+          "docks",
+          "last_reported",
+          "as_of_utc",
+          "history"
+        ],
+        "title": "StationDetail"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

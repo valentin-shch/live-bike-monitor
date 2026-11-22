@@ -1,0 +1,8 @@
+# Allow-list: send Docker nothing except what the image needs. Safer than listing what to
+# leave out, because a new local file (an .env, a data dump) is excluded without anyone
+# having to remember it.
+*
+!requirements.txt
+!collector/
+!api/
+**/__pycache__
