@@ -36,6 +36,9 @@ RETIRED_AFTER = timedelta(days=7)
 # expecting it: a station removed for good ends its missing episode a day later.
 MISSING_LOOKBACK = timedelta(hours=24)
 RAW_RETENTION_DAYS = 14
+# Data counts as fresh while the last fetch is at most this old. Runs are every 15 minutes and
+# GitHub often starts them late: two missed windows plus a late start is still fresh.
+FRESH_FOR = timedelta(minutes=45)
 # Only these become messages. Empty and full happen hundreds of times a day: they belong on
 # the site, not on a phone. Retired is a fact about a dead station, not news.
 ALERT_STATES = frozenset({"offline", "stale", "missing", "feed_down", "schema_error", "crashed"})

@@ -4,7 +4,7 @@ Run locally:  uvicorn api.main:app --port 8000   then open http://localhost:8000
 It reads API_DATA_DIR if set (a folder with the data branch checked out), else data/.
 """
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Annotated
 
@@ -25,11 +25,7 @@ from api.models import (
     StationDetail,
     StationState,
 )
-from collector.config import DATA_DIR, DISPLAY_TZ
-
-# Runs are every 15 minutes and GitHub often starts them late. Two missed windows plus
-# a late start still counts as fresh; beyond that, something is wrong with the collector.
-FRESH_FOR = timedelta(minutes=45)
+from collector.config import DATA_DIR, DISPLAY_TZ, FRESH_FOR
 
 Limit = Annotated[int, Query(ge=1, le=200, description="Items per page")]
 Offset = Annotated[int, Query(ge=0, description="Items to skip")]

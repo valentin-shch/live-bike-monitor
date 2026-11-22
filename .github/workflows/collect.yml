@@ -78,3 +78,30 @@ jobs:
             git pull --rebase || true
           done
           git push || { echo "push failed 4 times, this window's snapshot is lost"; exit 1; }
+
+      # Rebuilt after every run, failed ones too: a page that says "collector failing"
+      # is the point of a status page.
+      - name: Build site
+        if: ${{ !cancelled() }}
+        run: python -m pages.build
+
+      - uses: actions/upload-pages-artifact@v5
+        if: ${{ !cancelled() }}
+        with:
+          path: _site
+
+  # A separate job, because publishing needs permissions the collector must not have.
+  deploy:
+    needs: collect
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      pages: write      # publish to GitHub Pages
+      id-token: write   # prove to Pages that this run is really this repository's workflow
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

@@ -8,7 +8,8 @@ from pydantic import BaseModel, Field
 # "unknown": seen in the last 24 h but not in the latest snapshot (the nightly 41).
 StationState = Literal["ok", "empty", "full", "offline", "retired", "unknown"]
 EventState = Literal[
-    "empty", "full", "offline", "retired", "stale", "missing", "feed_down", "schema_error", "crashed"
+    "empty", "full", "offline", "retired", "stale", "missing", "feed_down", "schema_error", "crashed",
+    "weather_down",
 ]
 
 T = TypeVar("T")
@@ -60,7 +61,9 @@ class StationDetail(Station):
 
 class Event(BaseModel):
     scope: Literal["station", "feed"]
-    subject: str = Field(description="Station id, or the feed check: freshness, station_list, collection")
+    subject: str = Field(
+        description="Station id, or the feed check: freshness, station_list, collection, weather"
+    )
     state: EventState
     started_at: datetime
     ended_at: datetime | None = Field(description="Missing while the episode is still going on")

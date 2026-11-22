@@ -73,6 +73,28 @@ def collection_events(runs):
     return episodes.rename(columns={"check": "subject"}).assign(scope="feed")[EVENT_COLUMNS]
 
 
+def weather_events(runs):
+    """Failed weather calls as a feed event (subject "weather", state "weather_down").
+
+    Only runs that actually called Open-Meteo count: "not_due" and "skipped" rows say
+    nothing about the weather service, so they are left out, like a skipped run.
+    No alert: the bikes are still collected and the gap heals itself. The site shows it.
+    """
+    called = runs[runs["weather"].isin(["ok", "failed"])]
+    if called.empty:
+        return pd.DataFrame(columns=EVENT_COLUMNS)
+    last = _last_run_per_window(called)
+    states = pd.DataFrame(
+        {
+            "check": "weather",
+            "window_utc": last["window_utc"],
+            "state": last["weather"].map({"ok": "ok", "failed": "weather_down"}),
+        }
+    )
+    episodes = confirmed_episodes(states, key="check")
+    return episodes.rename(columns={"check": "subject"}).assign(scope="feed")[EVENT_COLUMNS]
+
+
 def coverage(report):
     """Counts for the health section: how many windows we expected and what happened."""
     counts = report["status"].value_counts()

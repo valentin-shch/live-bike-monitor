@@ -18,12 +18,15 @@ class Hourly(BaseModel):
     time: list[datetime]  # asked as Unix seconds, so they arrive as UTC, never naive
     temperature_2m: list[float | None]
     precipitation: list[float | None]
+    wind_speed_10m: list[float | None]  # km/h, Open-Meteo's default unit
 
     @model_validator(mode="after")
     def same_length(self):
         # The hours come as parallel lists. If one list were shorter, every value after the
         # gap would sit next to the wrong hour, and nothing else would notice.
-        lengths = {len(self.time), len(self.temperature_2m), len(self.precipitation)}
+        lengths = {
+            len(self.time), len(self.temperature_2m), len(self.precipitation), len(self.wind_speed_10m)
+        }
         if len(lengths) != 1:
             raise ValueError(f"hourly lists have different lengths: {sorted(lengths)}")
         return self
@@ -83,7 +86,7 @@ def fetch_weather(client, past_days):
         params={
             "latitude": WEATHER_LAT,
             "longitude": WEATHER_LON,
-            "hourly": "temperature_2m,precipitation",
+            "hourly": "temperature_2m,precipitation,wind_speed_10m",
             "past_days": past_days,
             "forecast_days": 1,
             "timeformat": "unixtime",
@@ -100,6 +103,7 @@ def fetch_weather(client, past_days):
             "hour_utc": pd.to_datetime(hourly.time, utc=True),
             "temperature_c": pd.array(hourly.temperature_2m, dtype="Float64"),
             "precipitation_mm": pd.array(hourly.precipitation, dtype="Float64"),
+            "wind_kmh": pd.array(hourly.wind_speed_10m, dtype="Float64"),
         }
     )
 

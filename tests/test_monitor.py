@@ -7,6 +7,7 @@ from collector.monitor import (
     collection_events,
     coverage,
     read_runs,
+    weather_events,
     window_report,
     write_run,
 )
@@ -79,3 +80,14 @@ def test_two_failed_runs_in_a_row_are_a_schema_change_event():
     assert events[["scope", "subject", "state"]].values.tolist() == [["feed", "collection", "schema_error"]]
     assert events["started_at"].item() == t("08:15")
     assert pd.isna(events["ended_at"].item())
+
+
+def test_two_failed_weather_calls_are_an_event_and_not_due_runs_do_not_count():
+    rows = runs(("08:04", "ok"), ("08:19", "ok"), ("08:34", "ok"), ("08:49", "ok"))
+    rows["weather"] = ["failed", "not_due", "failed", "ok"]  # the not_due run sits in between
+
+    events = weather_events(rows)
+
+    assert events[["subject", "state"]].values.tolist() == [["weather", "weather_down"]]
+    assert events["started_at"].item() == t("08:00")
+    assert pd.isna(events["ended_at"].item())  # one ok call is not yet a confirmed recovery

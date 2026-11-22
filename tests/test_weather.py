@@ -16,8 +16,8 @@ from collector.weather import (
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
-# The recorded answer covers 2026-11-18 00:00 to 2026-11-20 23:00 UTC (72 hours).
-NOW = datetime(2026, 11, 20, 10, 20, tzinfo=timezone.utc)
+# The recorded answer covers 2026-11-20 00:00 to 2026-11-22 23:00 UTC (72 hours).
+NOW = datetime(2026, 11, 22, 10, 20, tzinfo=timezone.utc)
 
 
 def recorded():
@@ -33,25 +33,26 @@ def weather(make_client):
 def test_recorded_answer_parses_into_72_utc_hours(weather):
     assert len(weather) == 72
     assert str(weather["hour_utc"].dt.tz) == "UTC"
-    assert weather["hour_utc"].iloc[0] == pd.Timestamp("2026-11-18 00:00", tz="UTC")
-    assert (weather["precipitation_mm"] > 0).sum() == 4
+    assert weather["hour_utc"].iloc[0] == pd.Timestamp("2026-11-20 00:00", tz="UTC")
+    assert list(weather.columns) == ["hour_utc", "temperature_c", "precipitation_mm", "wind_kmh"]
+    assert weather[["temperature_c", "precipitation_mm", "wind_kmh"]].notna().all().all()
 
 
 def test_only_finished_hours_are_stored(weather, tmp_path):
     store_weather(weather, NOW, tmp_path)
 
     # At 10:20 the 09:00-10:00 hour is the last finished one; 10:00 onwards is forecast.
-    assert weather_days(tmp_path) == [date(2026, 11, 18), date(2026, 11, 19), date(2026, 11, 20)]
-    today = pd.read_parquet(tmp_path / "weather" / "2026-11-20.parquet")
+    assert weather_days(tmp_path) == [date(2026, 11, 20), date(2026, 11, 21), date(2026, 11, 22)]
+    today = pd.read_parquet(tmp_path / "weather" / "2026-11-22.parquet")
     assert len(today) == 10
-    assert today["hour_utc"].max() == pd.Timestamp("2026-11-20 09:00", tz="UTC")
+    assert today["hour_utc"].max() == pd.Timestamp("2026-11-22 09:00", tz="UTC")
 
 
 def test_storing_again_replaces_instead_of_duplicating(weather, tmp_path):
     store_weather(weather, NOW, tmp_path)
     store_weather(weather, NOW.replace(hour=12), tmp_path)
 
-    today = pd.read_parquet(tmp_path / "weather" / "2026-11-20.parquet")
+    today = pd.read_parquet(tmp_path / "weather" / "2026-11-22.parquet")
     assert len(today) == 12  # 00:00 to 11:00, each hour once
     assert today["hour_utc"].is_unique
 
@@ -81,10 +82,10 @@ def test_first_backfill_reaches_the_first_bike_day(tmp_path):
 
 
 def test_after_an_outage_the_backfill_reaches_over_the_gap(weather, tmp_path):
-    store_weather(weather, NOW, tmp_path)  # last stored day: 2026-11-20
+    store_weather(weather, NOW, tmp_path)  # last stored day: 2026-11-22
 
-    assert past_days_needed(date(2026, 11, 20), tmp_path) == 0
-    assert past_days_needed(date(2026, 11, 23), tmp_path) == 3  # three days of weather down
+    assert past_days_needed(date(2026, 11, 22), tmp_path) == 0
+    assert past_days_needed(date(2026, 11, 25), tmp_path) == 3  # three days of weather down
 
 
 def test_backfill_is_capped_at_the_api_limit(tmp_path):
@@ -102,7 +103,7 @@ def test_weather_down_does_not_raise_and_stores_nothing(make_client, tmp_path):
 
 
 def test_update_asks_for_the_needed_past_days(make_client, tmp_path):
-    (tmp_path / "snapshots" / "2026-11-18").mkdir(parents=True)
+    (tmp_path / "snapshots" / "2026-11-20").mkdir(parents=True)
     client, adapter, sleeps = make_client([recorded()])
 
     assert update_weather(client, NOW, tmp_path) == "ok"

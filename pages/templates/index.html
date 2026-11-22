@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bicing live — Barcelona bike-share monitor</title>
+  <meta name="description" content="Every Bicing station in Barcelona, checked every 15 minutes: which are empty, full or offline right now, and what changed in the last 24 hours.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="status" data-level="{{ status.level }}">
+  <div class="status-line">
+    <span class="pill"><span class="dot" aria-hidden="true"></span><span id="status-label">{{ status.label }}</span></span>
+    {% if status.last_fetch_utc %}
+    <span class="meta">Last collection <span class="num">{{ status.last_fetch_local }}</span> · <span class="num" id="age">just now</span></span>
+    {% endif %}
+  </div>
+
+  <h1>Barcelona's bike stations, checked every 15 minutes</h1>
+
+  {% if headline %}
+  <p class="finding">
+    Right now <strong class="num state-empty">{{ headline.empty }}</strong> of
+    <span class="num">{{ headline.working }}</span> working stations have no bikes, and
+    <strong class="num state-full">{{ headline.full }}</strong> have no free docks.
+  </p>
+  {% else %}
+  <p class="finding">No data collected yet.</p>
+  {% endif %}
+
+  <p class="why" id="status-note">Data straight from the Bicing feed, collected unattended. When a station runs out, stops reporting, or the feed itself breaks, it shows up here.</p>
+
+  {% if status.uptime %}
+  <dl class="facts">
+    <div><dt>Uptime, {{ "7 days" if status.uptime.full_week else "since " ~ status.uptime.since }}</dt>
+      <dd class="num">{{ "%.1f" | format(100 * status.uptime.share) }}%</dd></div>
+    <div><dt>Windows collected</dt><dd class="num">{{ status.uptime.ok }} / {{ status.uptime.expected }}</dd></div>
+    {% if headline %}<div><dt>Offline now</dt><dd class="num">{{ headline.offline }}</dd></div>{% endif %}
+  </dl>
+  {% endif %}
+</header>
+
+<main>
+  <section class="map-section" aria-labelledby="map-title">
+    <h2 id="map-title">Where the city runs out — the last 24 hours</h2>
+    <div class="legend" id="legend">
+      <span><i class="sw state-empty-bg"></i>Empty <b class="num" data-count="e"></b></span>
+      <span><i class="sw state-full-bg"></i>Full <b class="num" data-count="f"></b></span>
+      <span><i class="sw state-ok-bg"></i>OK <b class="num" data-count="o"></b></span>
+      <span><i class="sw state-off-bg"></i>Offline / no data <b class="num" data-count="x"></b></span>
+    </div>
+    <div id="map" class="map" role="img" aria-label="Map of Bicing stations coloured by state"></div>
+    <div class="player">
+      <button type="button" id="play" aria-label="Play the last 24 hours">Play</button>
+      <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Time">
+      <span class="num" id="frame-time"></span>
+    </div>
+    <div class="panel" id="panel" aria-live="polite">
+      <p class="hint">Tap a station to see its last 24 hours.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="log-title">
+    <h2 id="log-title">What changed in the last 24 hours</h2>
+    {% if cards %}
+    <ol class="cards">
+      {% for card in cards %}
+      <li class="card{% if card.ongoing %} ongoing{% endif %}" data-state="{{ card.state }}">
+        <p class="card-text">{{ card.text }} <span class="num duration">({{ card.duration }})</span></p>
+        {% if card.place %}<p class="card-place">{{ card.place }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    {% if more_cards %}<p class="more">…and {{ more_cards }} more. The full list is in the API's <code>/events</code>.</p>{% endif %}
+    {% else %}
+    <p class="hint">Nothing changed in the last 24 hours.</p>
+    {% endif %}
+  </section>
+</main>
+
+<footer>
+  <p>Built <span class="num">{{ built_local }}</span> Madrid time. Times are Madrid time.</p>
+  <p>Station data: Bicing, Ajuntament de Barcelona. Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.</p>
+</footer>
+
+<script type="application/json" id="site-data">{{ data_json | safe }}</script>
+<script src="plotly.min.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

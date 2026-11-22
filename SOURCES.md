@@ -19,7 +19,7 @@ Both sources are public, need no key, and are called by an unattended job every 
 
 ## Open-Meteo weather
 
-- **What:** hourly temperature (°C) and precipitation (mm) for one point in central Barcelona
+- **What:** hourly temperature (°C), precipitation (mm) and wind speed (km/h) for one point in central Barcelona
   (41.387, 2.170). The API answers for the nearest model grid cell (about 41.415, 2.225),
   so it is a city-wide "rain or dry" signal, not a street-level measurement.
 - **URL:** https://api.open-meteo.com/v1/forecast
@@ -31,3 +31,11 @@ Both sources are public, need no key, and are called by an unattended job every 
 - **Note:** past hours come from the forecast API's `past_days` (model values, not station
   observations). One call can reach back up to 92 days, which is how missing weather is
   filled after an outage.
+
+## Map
+
+- The map has no background tiles: station dots are drawn on a plain dark background from
+  the stations' own coordinates (from the Bicing feed above). No tile provider, no key, and
+  no request from the visitor's browser to a third party.
+- Plotly.js (MIT licence) is served from this site itself, copied from the pinned Python
+  package at build time.

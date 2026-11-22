@@ -10,7 +10,7 @@ from collector.config import DATA_DIR
 from collector.detect import EVENT_COLUMNS, detect_events, merge_events
 from collector.fetch import SchemaError, fetch_feeds, info_frame, status_frame
 from collector.http import HttpClient, HttpError
-from collector.monitor import collection_events, read_runs, write_run
+from collector.monitor import collection_events, read_runs, weather_events, write_run
 from collector.notify import configured_notifiers, pending_alerts, send_alerts
 from collector.storage import (
     maintain,
@@ -83,7 +83,8 @@ def update_events(client, data_dir, now):
     raw_start = snapshots["window_utc"].min() if not snapshots.empty else runs["window_utc"].min()
     runs = runs[runs["window_utc"] >= raw_start]
 
-    parts = [p for p in (detect_events(snapshots), collection_events(runs)) if not p.empty]
+    found = (detect_events(snapshots), collection_events(runs), weather_events(runs))
+    parts = [p for p in found if not p.empty]
     fresh = pd.concat(parts, ignore_index=True) if parts else pd.DataFrame(columns=EVENT_COLUMNS)
     events = merge_events(read_events(data_dir), fresh, raw_start)
     write_events(events, data_dir)
