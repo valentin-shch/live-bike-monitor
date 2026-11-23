@@ -436,8 +436,11 @@ def build(data_dir=DATA_DIR, out_dir=OUT_DIR, now=None, api_dir=API_DIR):
     (out_dir / "api.html").write_text(render("api.html", {**reference, "built_local": local_time(now, now)}), encoding="utf-8")
     shutil.copy(api_dir / "openapi.json", out_dir / "openapi.json")
 
-    for asset in ("site.css", "site.js"):
+    for asset in ("site.css", "site.js", "map.js", "favicon.svg"):
         shutil.copy(HERE / "static" / asset, out_dir / asset)
+    # The street map, its fonts and icons, and the libraries that draw it, with their licences.
+    for folder in ("map", "vendor"):
+        shutil.copytree(HERE / "static" / folder, out_dir / folder, dirs_exist_ok=True)
     # Served from our own site: same version as the Python package, and no third-party
     # request from the visitor's browser.
     (out_dir / "plotly.min.js").write_text(get_plotlyjs(), encoding="utf-8")

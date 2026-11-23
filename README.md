@@ -65,8 +65,9 @@ small receiver that checks the webhook's HMAC signature, timestamp and duplicate
 - **Empty share counts renting stations only:** a closed station with no bikes is closed, not empty.
 - **Alerts at least once:** sent first, recorded after. A crash between the two can repeat a
   message; the other order could lose one.
-- **No map tiles:** the free dark tiles now need an API key, so stations are drawn on plain
-  black. Their dots draw the city well enough.
+- **A street map with no third party:** a 10 MB Barcelona cut of OpenStreetMap is served from
+  the site itself and read in small pieces (HTTP range requests), with its fonts and code. No
+  map provider sees visitors, and the map cannot break because someone else's service did.
 
 ## Honest limits
 
@@ -81,8 +82,9 @@ small receiver that checks the webhook's HMAC signature, timestamp and duplicate
 ## Next steps
 
 API keys and a rate limiter for the API; a `/v1` prefix before anyone else depends on it;
-a cache for the API; a smaller Plotly bundle; street tiles from a keyless provider. Out of scope
+a cache for the API; a smaller Plotly bundle; a yearly refresh of the map extract. Out of scope
 on purpose: OAuth, a database, hosting the API.
 
-Data: Bicing station data, Ajuntament de Barcelona. Weather data by Open-Meteo.com.
+Data: Bicing station data, Ajuntament de Barcelona. Weather data by Open-Meteo.com. Map data
+© OpenStreetMap contributors (ODbL), map design by Protomaps.
 Details, licences and limits in [SOURCES.md](SOURCES.md).

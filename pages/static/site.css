@@ -77,6 +77,19 @@ h2 { font-size: 1.2rem; margin: 32px 0 12px; }
   border-radius: 8px;
 }
 @media (min-width: 768px) { .map { aspect-ratio: 16 / 10; } }
+.map { overflow: hidden; }
+
+/* MapLibre's own controls, moved onto the dark palette. */
+/* ".map" in front: these must beat MapLibre's own stylesheet, which is loaded first. */
+.map .maplibregl-ctrl.maplibregl-ctrl-attrib {
+  background-color: rgba(10, 12, 15, 0.85); color: var(--text); font: 11px/1.5 var(--sans);
+}
+.map .maplibregl-ctrl-attrib a { color: var(--text); }
+.map .maplibregl-ctrl-group { background: var(--surface); border: 1px solid var(--line); box-shadow: none; }
+.map .maplibregl-ctrl-group button { background-color: transparent; }
+.map .maplibregl-ctrl-group button + button { border-top-color: var(--line); }
+.map .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(0.85); }
+.maplibregl-cooperative-gesture-screen { font-family: var(--sans); }
 
 .player { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
 .player input { flex: 1; min-width: 0; accent-color: var(--text); }

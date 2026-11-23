@@ -311,3 +311,32 @@ def test_build_writes_the_api_page_and_openapi_file(tmp_path):
 
     assert "GET" in (tmp_path / "site" / "api.html").read_text(encoding="utf-8")
     assert json.loads((tmp_path / "site" / "openapi.json").read_text(encoding="utf-8"))["openapi"]
+
+
+# ---------- the street map ----------
+
+def test_the_page_loads_nothing_from_other_sites(tmp_path):
+    """Visitors' browsers talk only to our site: no IP addresses handed to a map or font host."""
+    build(tmp_path / "data", tmp_path / "site", now=NOW)
+    site = tmp_path / "site"
+
+    html = (site / "index.html").read_text(encoding="utf-8")
+    loaded = re.findall(r'<(?:script|link)[^>]+(?:src|href)="([^"]+)"', html)
+    assert loaded and not [u for u in loaded if "//" in u]
+
+    style = json.loads((site / "map" / "style.json").read_text(encoding="utf-8"))
+    assert not style["glyphs"].startswith("http") and not style["sprite"].startswith("http")
+    assert style["sources"]["protomaps"]["url"] == "pmtiles://map/barcelona.pmtiles"
+    assert (site / "map" / "barcelona.pmtiles").stat().st_size > 1_000_000
+
+
+def test_the_map_credits_and_licences_ship_with_it(tmp_path):
+    build(tmp_path / "data", tmp_path / "site", now=NOW)
+    site = tmp_path / "site"
+
+    style = json.loads((site / "map" / "style.json").read_text(encoding="utf-8"))
+    assert "OpenStreetMap" in style["sources"]["protomaps"]["attribution"]
+    assert "Open Database License" in (site / "index.html").read_text(encoding="utf-8")
+    for licence in ("vendor/LICENSE-maplibre-gl.txt", "vendor/LICENSE-pmtiles.txt", "vendor/LICENSE-fflate.txt",
+                    "map/LICENSE-basemaps.md", "map/fonts/OFL.txt", "map/sprites/LICENSE-icons.md"):
+        assert (site / licence).exists(), licence

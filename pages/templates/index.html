@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bicing live — Barcelona bike-share monitor</title>
   <meta name="description" content="Every Bicing station in Barcelona, checked every 15 minutes: which are empty, full or offline right now, and what changed in the last 24 hours.">
+  <link rel="stylesheet" href="vendor/maplibre-gl.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -33,7 +35,7 @@
 
   {% if status.uptime %}
   <dl class="facts">
-    <div><dt>Uptime, {{ "last 24 h" if status.uptime.full_period else "since " ~ status.uptime.since }}</dt>
+    <div><dt>Uptime, {% if status.uptime.full_period %}last 24&nbsp;h{% else %}since {{ status.uptime.since }}{% endif %}</dt>
       <dd class="num">{{ "%.1f" | format(100 * status.uptime.share) }}%</dd></div>
     <div><dt>Windows collected</dt><dd class="num">{{ status.uptime.ok }} / {{ status.uptime.expected }}</dd></div>
     {% if headline %}<div><dt>Offline now</dt><dd class="num">{{ headline.offline }}</dd></div>{% endif %}
@@ -50,7 +52,7 @@
       <span><i class="sw state-ok-bg"></i>OK <b class="num" data-count="o"></b></span>
       <span><i class="sw state-off-bg"></i>Offline / no data <b class="num" data-count="x"></b></span>
     </div>
-    <div id="map" class="map" role="img" aria-label="Map of Bicing stations coloured by state"></div>
+    <div id="map" class="map" role="region" aria-label="Map of Bicing stations coloured by state"></div>
     <div class="player">
       <button type="button" id="play" aria-label="Play the last 24 hours">Play</button>
       <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Time">
@@ -148,11 +150,16 @@
 <footer>
   <p>Built <span class="num">{{ built_local }}</span> Madrid time. Times are Madrid time.</p>
   <p>The same history is served by a small read-only API: <a href="api.html">API reference</a>.</p>
-  <p>Station data: Bicing, Ajuntament de Barcelona. Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.</p>
+  <p>Station data: Bicing, Ajuntament de Barcelona. Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a>.
+    Map data <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>, available under the
+    Open Database License; map design by <a href="https://protomaps.com">Protomaps</a>. The map, its fonts and code are
+    served from this site.</p>
 </footer>
 
 <script type="application/json" id="site-data">{{ data_json | safe }}</script>
 <script src="plotly.min.js"></script>
 <script src="site.js"></script>
+<script src="vendor/pmtiles.js"></script>
+<script type="module" src="map.js"></script>
 </body>
 </html>

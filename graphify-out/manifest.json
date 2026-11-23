@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "pages/build.py": {
-    "mtime": 1795451444.94978,
-    "seen": 1795451725.813187,
-    "ast_hash": "77f28438269a744679f845e7ce7dba36",
+    "mtime": 1795458401.178084,
+    "seen": 1795458532.7490525,
+    "ast_hash": "127a6de3033e2808962183949b9787b8",
     "semantic_hash": ""
   },
   "tests/conftest.py": {
@@ -216,9 +216,9 @@
     "semantic_hash": ""
   },
   "pages/static/site.js": {
-    "mtime": 1795447624.9533992,
-    "seen": 1795448014.0386024,
-    "ast_hash": "e60a931f08f3940a8126b5bd3684ef41",
+    "mtime": 1795456464.3650987,
+    "seen": 1795458532.7491577,
+    "ast_hash": "737353e553dde05cb77d4384f9b0e785",
     "semantic_hash": ""
   },
   "tests/fixtures/open_meteo_v1.json": {
@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "tests/test_pages.py": {
-    "mtime": 1795451710.0738902,
-    "seen": 1795451725.8152688,
-    "ast_hash": "b4be90aabc784cf7f56daec2ab24d53b",
+    "mtime": 1795456517.2158263,
+    "seen": 1795458532.7673814,
+    "ast_hash": "e887261ecb02a65cb5868606e3264937",
     "semantic_hash": ""
   },
   "tests/test_weather.py": {
@@ -270,27 +270,123 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1795441620.3734062,
-    "seen": 1795441688.5652137,
-    "ast_hash": "7a8881e5e8a8c2d943abe41d2975ab82",
+    "mtime": 1795458433.6434157,
+    "seen": 1795458532.7792923,
+    "ast_hash": "8a198b25836b1e271b5173d8bfc38d1d",
     "semantic_hash": ""
   },
   "SOURCES.md": {
-    "mtime": 1795368223.4364705,
-    "seen": 1795441688.565221,
-    "ast_hash": "0a0cd7a33c507dd2b55bdacb1612ce03",
+    "mtime": 1795458421.2492094,
+    "seen": 1795458532.7793138,
+    "ast_hash": "9153589c5b9d0cbc72e529ed2b9f1132",
     "semantic_hash": ""
   },
   "pages/templates/api.html": {
-    "mtime": 1795369767.6042492,
-    "seen": 1795441688.5652275,
-    "ast_hash": "3489906a4cfea8c4d56032a11d294297",
+    "mtime": 1795458401.184355,
+    "seen": 1795458532.779524,
+    "ast_hash": "a304b44d7db4876b6f1068c1ed3bf99e",
     "semantic_hash": ""
   },
   "pages/templates/index.html": {
-    "mtime": 1795451444.94978,
-    "seen": 1795451725.8185225,
-    "ast_hash": "de9e59dcb6c8ca64a5c9af2c9bb2c6ca",
+    "mtime": 1795458401.178084,
+    "seen": 1795458532.7795439,
+    "ast_hash": "39b8d6d49c6e432375ce06b1017e2ec5",
+    "semantic_hash": ""
+  },
+  "pages/static/map.js": {
+    "mtime": 1795457554.514881,
+    "seen": 1795458532.749078,
+    "ast_hash": "e50fd321bca0fa9409110ff2a898ebc1",
+    "semantic_hash": ""
+  },
+  "pages/static/map/sprites/black.json": {
+    "mtime": 1795456376.781417,
+    "seen": 1795458532.7490985,
+    "ast_hash": "49d59afe86f1828334d5a579f56a0748",
+    "semantic_hash": ""
+  },
+  "pages/static/map/sprites/black@2x.json": {
+    "mtime": 1795456376.7854276,
+    "seen": 1795458532.7491162,
+    "ast_hash": "91d0d1264e382a680137eefee44d545a",
+    "semantic_hash": ""
+  },
+  "pages/static/map/style.json": {
+    "mtime": 1795458147.501889,
+    "seen": 1795458532.7491338,
+    "ast_hash": "a06bf747bbd6f09185e97c18d96188b1",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/maplibre-gl-worker.mjs": {
+    "mtime": 1795456374.409199,
+    "seen": 1795458532.749177,
+    "ast_hash": "1ae8214f83e9f124a5c4faf56f86cc8b",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/maplibre-gl.mjs": {
+    "mtime": 1795456373.3729932,
+    "seen": 1795458532.749194,
+    "ast_hash": "4e845339dcd8f4db7eb56721225b2863",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/pmtiles.js": {
+    "mtime": 1795456375.2159202,
+    "seen": 1795458532.7492137,
+    "ast_hash": "4e5248dba310e0edb0372030f9802b6e",
+    "semantic_hash": ""
+  },
+  "pages/static/map/LICENSE-basemaps.md": {
+    "mtime": 1795456376.0947511,
+    "seen": 1795458532.7793424,
+    "ast_hash": "1869d1ffda3861a852802f15df0e55e2",
+    "semantic_hash": ""
+  },
+  "pages/static/map/fonts/OFL.txt": {
+    "mtime": 1795456376.792419,
+    "seen": 1795458532.7794256,
+    "ast_hash": "e73219d5197f345c74d4562ee4f9a25e",
+    "semantic_hash": ""
+  },
+  "pages/static/map/sprites/LICENSE-icons.md": {
+    "mtime": 1795456376.208072,
+    "seen": 1795458532.7794485,
+    "ast_hash": "60b73b4e07ffc9b03a6ce52180d774b0",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/LICENSE-fflate.txt": {
+    "mtime": 1795456375.555513,
+    "seen": 1795458532.7794662,
+    "ast_hash": "b44ae31f7482d1a8d2f9bce6cc409db5",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/LICENSE-maplibre-gl.txt": {
+    "mtime": 1795456375.3285584,
+    "seen": 1795458532.7794857,
+    "ast_hash": "c73ffe791f71e9dbcf26aeff3d6269ac",
+    "semantic_hash": ""
+  },
+  "pages/static/vendor/LICENSE-pmtiles.txt": {
+    "mtime": 1795456375.4461012,
+    "seen": 1795458532.779503,
+    "ast_hash": "4735d28a928165a771ea98f63a5f24d9",
+    "semantic_hash": ""
+  },
+  "pages/static/favicon.svg": {
+    "mtime": 1795458400.8184493,
+    "seen": 1795458532.7809637,
+    "ast_hash": "b10dc4560dce1ee5a1b251b8b3cfe4c9",
+    "semantic_hash": ""
+  },
+  "pages/static/map/sprites/black.png": {
+    "mtime": 1795456376.7834127,
+    "seen": 1795458532.7809741,
+    "ast_hash": "a6f5ef7ab74eca12f75facc0b8e7f3bd",
+    "semantic_hash": ""
+  },
+  "pages/static/map/sprites/black@2x.png": {
+    "mtime": 1795456376.787415,
+    "seen": 1795458532.7809815,
+    "ast_hash": "de69cda2f4771d634798867533d100cb",
     "semantic_hash": ""
   }
 }

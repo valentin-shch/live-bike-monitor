@@ -1,18 +1,10 @@
-// The status page's behaviour: its own freshness check, the time-lapse map, and the
-// station panel. All data comes from the JSON block the build wrote into the page.
+// The status page's own freshness check and the patterns heatmap. The map lives in map.js.
+// All data comes from the JSON block the build wrote into the page.
 (function () {
   "use strict";
   const data = JSON.parse(document.getElementById("site-data").textContent);
   const css = getComputedStyle(document.documentElement);
   const color = (name) => css.getPropertyValue(name).trim();
-  const COLORS = {
-    o: color("--ok"), e: color("--empty"), f: color("--full"),
-    x: color("--off"), u: color("--off"), r: color("--retired"),
-  };
-  const WORDS = { o: "OK", e: "Empty", f: "Full", x: "Offline", u: "No data", r: "Retired" };
-  const madrid = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/Madrid", weekday: "short", hour: "2-digit", minute: "2-digit",
-  });
 
   // ---------- 1. freshness, judged in the browser ----------
   // Nobody rebuilds a static page when the builder stops. So the page checks its own age
@@ -68,112 +60,4 @@
     );
   }
 
-  // ---------- 3. the time-lapse map ----------
-  if (!data.windows || !data.windows.length || !window.Plotly) return;
-  const stations = data.stations;
-  const last = data.windows.length - 1;
-  let frame = last;
-  let selected = null;
-  let timer = null;
-
-  const lat0 = stations.reduce((sum, s) => sum + s.lat, 0) / stations.length;
-  const colorsAt = (i) => data.states.map((row) => COLORS[row[i]]);
-
-  const mapEl = document.getElementById("map");
-  Plotly.newPlot(
-    mapEl,
-    [{
-      type: "scatter", mode: "markers",
-      x: stations.map((s) => s.lon), y: stations.map((s) => s.lat),
-      marker: { color: colorsAt(frame), size: 8, line: { width: 0 } },
-      hoverinfo: "none",  // touch has no hover: everything is in the tap panel instead
-    }],
-    {
-      paper_bgcolor: color("--bg"), plot_bgcolor: color("--bg"),
-      margin: { l: 4, r: 4, t: 4, b: 4 }, showlegend: false, dragmode: "pan",
-      xaxis: { visible: false },
-      // A degree of longitude is shorter than a degree of latitude away from the equator
-      // (0.75 at Barcelona). Without this the city would be stretched sideways.
-      yaxis: { visible: false, scaleanchor: "x", scaleratio: 1 / Math.cos((lat0 * Math.PI) / 180) },
-    },
-    { responsive: true, displayModeBar: false, scrollZoom: false }
-  );
-
-  const scrub = document.getElementById("scrub");
-  const playBtn = document.getElementById("play");
-  scrub.max = String(last);
-
-  function showFrame(i) {
-    frame = i;
-    scrub.value = String(i);
-    Plotly.restyle(mapEl, { "marker.color": [colorsAt(i)] }, [0]);
-    document.getElementById("frame-time").textContent = madrid.format(new Date(data.windows[i]));
-    const counts = { o: 0, e: 0, f: 0, x: 0 };
-    data.states.forEach((row) => {
-      const c = row[i] === "u" ? "x" : row[i];
-      if (c in counts) counts[c] += 1;
-    });
-    document.querySelectorAll("[data-count]").forEach((el) => { el.textContent = counts[el.dataset.count]; });
-    if (selected !== null) showStation(selected);
-  }
-
-  function stop() {
-    clearInterval(timer);
-    timer = null;
-    playBtn.textContent = "Play";
-  }
-  playBtn.addEventListener("click", () => {
-    if (timer) return stop();
-    if (frame === last) showFrame(0);
-    playBtn.textContent = "Pause";
-    timer = setInterval(() => (frame >= last ? stop() : showFrame(frame + 1)), 250);
-  });
-  scrub.addEventListener("input", () => { stop(); showFrame(Number(scrub.value)); });
-
-  // ---------- 4. tap a station: its last 24 hours ----------
-  function sparkline(bikes, capacity) {
-    const top = Math.max(capacity || 0, ...bikes.filter((b) => b !== null), 1);
-    const w = bikes.length - 1 || 1;
-    const y = (b) => (30 - (b / top) * 28 - 1).toFixed(1);
-    // A gap in the data is a gap in the line, not an invented straight segment.
-    let path = "";
-    let pen = false;
-    bikes.forEach((b, i) => {
-      if (b === null) { pen = false; return; }
-      path += (pen ? "L" : "M") + ((i / w) * 100).toFixed(2) + " " + y(b);
-      pen = true;
-    });
-    const now = bikes[frame];
-    const marker = now === null ? "" :
-      '<circle cx="' + ((frame / w) * 100).toFixed(2) + '" cy="' + y(now) + '" r="1.6" fill="' + color("--text") + '"/>';
-    return '<svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">' +
-      '<path d="' + path + '" fill="none" stroke="' + color("--muted") + '" stroke-width="0.8" vector-effect="non-scaling-stroke"/>' +
-      marker + "</svg>";
-  }
-
-  function text(value) {
-    const span = document.createElement("span");
-    span.textContent = value;  // never innerHTML with data: a name is text, not markup
-    return span.innerHTML;
-  }
-
-  function showStation(i) {
-    selected = i;
-    const s = stations[i];
-    const state = data.states[i][frame];
-    const bikes = data.bikes[i];
-    const known = bikes.filter((b) => b !== null);
-    document.getElementById("panel").innerHTML =
-      "<h3>" + text(s.name || "Station " + s.id) + "</h3>" +
-      '<p class="sub">Station <span class="num">' + text(s.id) + "</span> · " + WORDS[state] +
-      (bikes[frame] === null ? "" : ' · <span class="num">' + bikes[frame] + "</span> bikes") +
-      (s.capacity ? ' of <span class="num">' + s.capacity + "</span> docks" : "") + "</p>" +
-      sparkline(bikes, s.capacity) +
-      '<div class="spark-axis"><span class="num">' + madrid.format(new Date(data.windows[0])) +
-      '</span><span>bikes, min <span class="num">' + Math.min(...known) + "</span> max <span class=\"num\">" +
-      Math.max(...known) + '</span></span><span class="num">' + madrid.format(new Date(data.windows[last])) + "</span></div>";
-  }
-  mapEl.on("plotly_click", (event) => showStation(event.points[0].pointIndex));
-
-  showFrame(last);
 })();
