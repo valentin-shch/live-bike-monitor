@@ -41,7 +41,7 @@
 
   // ---------- 2. patterns: weekday x hour heatmap ----------
   const heat = data.heatmap;
-  if (heat && window.Plotly) {
+  if (heat && heat.ready && window.Plotly) {
     const hours = Array.from({ length: 24 }, (_, h) => h);
     Plotly.newPlot(
       "heatmap",

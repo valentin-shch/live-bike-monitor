@@ -4,6 +4,7 @@ Writes _site/ (index.html plus its assets), which the workflow publishes to GitH
 It reads the same files as the API, through the same Repository.
 """
 import json
+import math
 import shutil
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -24,6 +25,11 @@ API_DIR = REPO_ROOT / "api"
 TZ = ZoneInfo(DISPLAY_TZ)
 UPTIME_DAYS = 7
 MAX_CARDS = 40
+# A weekday-hour cell counts only with readings from at least this many different days, and
+# the chart states a finding only once this share of the 168 cells counts. Before that, one
+# reading from one sparse day could top the chart and become the headline.
+MIN_DAYS_PER_CELL = 2
+MIN_CELL_COVERAGE = 0.9
 
 # One letter per station per window keeps the 24-hour time-lapse small:
 # 545 stations x 96 windows is about 52 KB of letters instead of megabytes of JSON.
@@ -201,11 +207,11 @@ def headline(snapshot):
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
-def empty_heatmap(hourly):
+def empty_heatmap(hourly, min_days=MIN_DAYS_PER_CELL, min_coverage=MIN_CELL_COVERAGE):
     """Share of working stations empty, by Madrid weekday (rows) and hour (columns).
 
-    The title states the finding (the peak), and the caption says how many days each
-    weekday rests on: with a few weeks of data, one odd Tuesday moves a whole row.
+    Not ready while too few cells rest on enough days: then only the progress is returned.
+    When ready, the title states the finding (the peak) and the caption how thin it still is.
     """
     if hourly.empty:
         return None
@@ -214,19 +220,29 @@ def empty_heatmap(hourly):
         return None
     grid = rows.pivot_table(index="weekday", columns="local_hour", values="empty_share", aggfunc="mean")
     grid = grid.reindex(index=range(7), columns=range(24))
-    days = rows.groupby("weekday")["local_day"].nunique().reindex(range(7), fill_value=0)
+    cell_days = rows.groupby(["weekday", "local_hour"])["local_day"].nunique()
+    cell_days = cell_days.unstack().reindex(index=range(7), columns=range(24)).fillna(0)
+    grid = grid.where(cell_days >= min_days)  # thin cells are not shown at all
 
     cells = grid.stack().dropna()
+    progress = {"ready": False, "cells_ready": len(cells), "cells_total": 7 * 24,
+                "cells_needed": math.ceil(7 * 24 * min_coverage), "min_days": min_days,
+                "days": int(rows["local_day"].nunique())}
+    if cells.empty or len(cells) < progress["cells_needed"]:
+        return progress
+
     (peak_day, peak_hour), peak = cells.idxmax(), cells.max()
     (low_day, low_hour), low = cells.idxmin(), cells.min()
-    covered = days[days > 0]
+    thinnest = int(cell_days.where(grid.notna()).stack().min())
     return {
+        **progress,
+        "ready": True,
         "title": f"Stations run dry most on {WEEKDAYS[peak_day]}s around {peak_hour:02d}:00",
         "caption": (
             f"{peak:.0%} of working stations empty then, against {low:.0%} on "
             f"{WEEKDAYS[low_day]}s at {low_hour:02d}:00. "
-            f"Based on {rows['local_day'].nunique()} days: each weekday rests on "
-            f"{covered.min()}–{covered.max()} of them, so this is a hint, not proof."
+            f"Based on {progress['days']} days; the thinnest hour shown rests on {thinnest} of them, "
+            "so this is a hint, not proof."
         ),
         "z": [[None if pd.isna(v) else round(float(v) * 100, 1) for v in row] for row in grid.to_numpy()],
         "weekdays": [d[:3] for d in WEEKDAYS],

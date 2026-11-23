@@ -202,13 +202,37 @@ def test_heatmap_title_states_the_peak_in_madrid_time():
                 (wed_8utc + timedelta(hours=5), 0.05, 1.0),
                 (wed_8utc + timedelta(hours=1), 0.90, 0.5),  # not renting all hour: left out
             ]
-        )
+        ),
+        min_days=1, min_coverage=0,  # this test is about the wording, not the thresholds
     )
 
     assert heat["title"] == "Stations run dry most on Wednesdays around 09:00"
     assert heat["caption"].startswith("30% of working stations empty then, against 5% on Wednesdays at 14:00.")
     assert "hint, not proof" in heat["caption"]
     assert heat["z"][2][9] == 30.0 and heat["z"][2][10] is None
+
+
+def test_sparse_history_shows_progress_not_a_finding():
+    # What GitHub's schedule gave us: a few readings a day, so each cell rests on one day.
+    start = datetime(2026, 11, 16, 0, 0, tzinfo=timezone.utc)
+    heat = empty_heatmap(hourly_rows([(start + timedelta(hours=7 * i), 0.2, 1.0) for i in range(20)]))  # 140 h: no hour seen twice
+
+    assert heat["ready"] is False and "title" not in heat
+    assert (heat["cells_ready"], heat["cells_needed"]) == (0, 152)
+
+
+def test_a_cell_from_one_day_cannot_become_the_headline():
+    monday = datetime(2026, 11, 2, 0, 0, tzinfo=timezone.utc)
+    wed_9_madrid = monday + timedelta(days=2, hours=8)
+    two_weeks = [monday + timedelta(hours=h) for h in range(14 * 24)]
+    rows = [(h, 0.10, 1.0) for h in two_weeks if (h - wed_9_madrid).total_seconds() % (7 * 86400) != 0]
+    rows += [(wed_9_madrid + timedelta(days=14), 0.90, 1.0)]  # one odd Wednesday, one hour
+
+    heat = empty_heatmap(hourly_rows(rows))
+
+    assert heat["ready"] is True
+    assert heat["z"][2][9] is None  # one day: not shown at all
+    assert "Wednesdays around 09:00" not in heat["title"]
 
 
 def test_no_history_no_heatmap():

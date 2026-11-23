@@ -79,13 +79,21 @@
   </section>
 
   <section aria-labelledby="patterns-title">
-    {% if heatmap %}
+    {% if heatmap and heatmap.ready %}
     <h2 id="patterns-title">{{ heatmap.title }}</h2>
     <p class="caption">{{ heatmap.caption }}</p>
     <div id="heatmap" class="heatmap" role="img" aria-label="{{ heatmap.title }}"></div>
     <div class="scale" aria-hidden="true">
       <span class="num">0%</span><i class="scale-bar"></i><span class="num">{{ "%.0f" | format(heatmap.max) }}% empty</span>
     </div>
+    {% elif heatmap %}
+    <h2 id="patterns-title">When does the city run out of bikes?</h2>
+    <p class="hint">
+      Still collecting. <span class="num">{{ heatmap.cells_ready }}</span> of
+      <span class="num">{{ heatmap.cells_total }}</span> weekday-hours have data from
+      {{ heatmap.min_days }}+ different days; the chart appears at
+      <span class="num">{{ heatmap.cells_needed }}</span>, so that no single day can make the headline.
+    </p>
     {% else %}
     <h2 id="patterns-title">When does the city run out of bikes?</h2>
     <p class="hint">Patterns appear after the first full day of data.</p>
