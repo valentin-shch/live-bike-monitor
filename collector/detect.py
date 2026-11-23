@@ -2,9 +2,11 @@
 import numpy as np
 import pandas as pd
 
-from collector.config import MIN_EVENT_SNAPSHOTS, MISSING_LOOKBACK, RETIRED_AFTER, SILENT_AFTER
+from collector.config import MAX_GAP, MIN_EVENT_SNAPSHOTS, MISSING_LOOKBACK, RETIRED_AFTER, SILENT_AFTER
 
-EVENT_COLUMNS = ["scope", "subject", "state", "started_at", "ended_at"]
+# ended_by: "change" when we saw the state change, "gap" when the data stopped and we lost
+# sight of it, missing while the episode is ongoing.
+EVENT_COLUMNS = ["scope", "subject", "state", "started_at", "ended_at", "ended_by"]
 EVENT_KEY = ["scope", "subject", "state"]
 
 
@@ -55,7 +57,7 @@ def feed_checks(snapshots, lookback=MISSING_LOOKBACK):
     )
 
 
-def confirmed_episodes(states, key="station_id", min_run=MIN_EVENT_SNAPSHOTS):
+def confirmed_episodes(states, key="station_id", min_run=MIN_EVENT_SNAPSHOTS, max_gap=MAX_GAP):
     """Turn per-window states into episodes: subject X was in state Y from A to B.
 
     `key` names the column that says whose states these are (a station, or a feed check).
@@ -64,8 +66,10 @@ def confirmed_episodes(states, key="station_id", min_run=MIN_EVENT_SNAPSHOTS):
     episodes = []
     ordered = states.sort_values([key, "window_utc"])
     for subject, rows in ordered.groupby(key, sort=False):
-        episodes += _episodes(subject, rows["window_utc"].tolist(), rows["state"].tolist(), min_run)
-    return pd.DataFrame(episodes, columns=[key, "state", "started_at", "ended_at"])
+        episodes += _episodes(
+            subject, rows["window_utc"].tolist(), rows["state"].tolist(), min_run, max_gap
+        )
+    return pd.DataFrame(episodes, columns=[key, "state", "started_at", "ended_at", "ended_by"])
 
 
 def detect_events(snapshots):
@@ -114,15 +118,25 @@ def merge_events(saved, fresh, raw_start):
     return merged.sort_values(["started_at", *EVENT_KEY], ignore_index=True)
 
 
-def _episodes(subject, windows, states, min_run):
+def _episodes(subject, windows, states, min_run, max_gap):
     # Debounce: a new state only counts once it has been seen min_run times in a row,
     # both going into a state and coming back out of it. Consecutive means consecutive
-    # rows we have; a skipped run in between does not break a streak.
+    # rows we have: a skipped run or two does not break a streak, but a gap longer than
+    # max_gap does. Across a long gap we know nothing, so we do not pretend to.
     episodes = []
-    confirmed, confirmed_since = None, None
+    confirmed, confirmed_since, last_seen = None, None, None
     candidate, candidate_since, streak = None, None, 0
+    previous = None
 
     for window, state in zip(windows, states):
+        if previous is not None and window - previous > max_gap:
+            # Close what we saw, at the last reading that showed it, and start from scratch.
+            if confirmed not in (None, "ok"):
+                episodes.append((subject, confirmed, confirmed_since, last_seen, "gap"))
+            confirmed, confirmed_since = None, None
+            candidate, streak = None, 0
+        previous = window
+
         if state == candidate:
             streak += 1
         else:
@@ -130,9 +144,11 @@ def _episodes(subject, windows, states, min_run):
 
         if candidate != confirmed and streak >= min_run:
             if confirmed not in (None, "ok"):
-                episodes.append((subject, confirmed, confirmed_since, candidate_since))
+                episodes.append((subject, confirmed, confirmed_since, candidate_since, "change"))
             confirmed, confirmed_since = candidate, candidate_since
+        if state == confirmed:
+            last_seen = window
 
     if confirmed not in (None, "ok"):
-        episodes.append((subject, confirmed, confirmed_since, None))
+        episodes.append((subject, confirmed, confirmed_since, None, None))
     return episodes

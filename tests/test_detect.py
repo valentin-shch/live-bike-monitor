@@ -136,6 +136,48 @@ def test_skipped_run_does_not_break_a_streak():
     assert as_tuples(confirmed_episodes(states)) == [("empty", t("08:30"), None)]
 
 
+def at(*hhmm, states, station_id="142"):
+    """States at the given times, so tests can leave real gaps between readings."""
+    return pd.DataFrame({"station_id": station_id, "window_utc": [t(h) for h in hhmm], "state": states})
+
+
+def test_a_long_gap_closes_the_episode_at_the_last_reading():
+    # Empty at 08:00 and 08:15, then nothing for six hours, then empty again.
+    # Before: one episode "empty 08:00 until now". We never saw those six hours.
+    states = at("08:00", "08:15", "14:15", "14:30", states=["empty"] * 4)
+
+    episodes = confirmed_episodes(states)
+
+    assert as_tuples(episodes) == [("empty", t("08:00"), t("08:15")), ("empty", t("14:15"), None)]
+    assert episodes["ended_by"].iloc[0] == "gap"  # last seen empty at 08:15, not "recovered at 14:15"
+
+
+def test_after_a_gap_the_debounce_starts_again():
+    states = at("08:00", "08:15", "14:15", states=["offline", "offline", "offline"])
+
+    episodes = confirmed_episodes(states)
+
+    assert len(episodes) == 1 and episodes["ended_by"].item() == "gap"  # one reading proves nothing yet
+
+
+def test_a_gap_of_exactly_one_hour_is_still_in_a_row():
+    states = at("08:00", "08:15", "09:15", "09:30", states=["empty", "empty", "ok", "ok"])
+
+    episodes = confirmed_episodes(states)
+
+    assert episodes["ended_by"].tolist() == ["change"]
+    assert episodes["ended_at"].item() == t("09:15")
+
+
+def test_the_last_reading_counts_only_if_it_showed_the_state():
+    # A lone ok at 08:30 is not confirmed, so the episode was last *seen* empty at 08:15.
+    states = at("08:00", "08:15", "08:30", "11:00", "11:15", states=["empty", "empty", "ok", "ok", "ok"])
+
+    episodes = confirmed_episodes(states)
+
+    assert (episodes["ended_at"].item(), episodes["ended_by"].item()) == (t("08:15"), "gap")
+
+
 def test_stations_are_detected_independently():
     states = pd.concat(
         [
@@ -154,7 +196,7 @@ def test_any_key_column_can_be_debounced():
 
     episodes = confirmed_episodes(states, key="check")
 
-    assert list(episodes.columns) == ["check", "state", "started_at", "ended_at"]
+    assert list(episodes.columns) == ["check", "state", "started_at", "ended_at", "ended_by"]
     assert as_tuples(episodes) == [("stale", t("08:15"), t("08:45"))]
 
 

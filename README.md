@@ -52,7 +52,8 @@ small receiver that checks the webhook's HMAC signature, timestamp and duplicate
 - **Files, not a database:** one Parquet file per window, partitioned by day, on a git branch.
   Free, inspectable, and the window is a natural key.
 - **States are debounced:** a station counts as empty, full or offline only after two snapshots
-  in a row, both going in and coming out, so one odd reading does not send an alert.
+  in a row, both going in and coming out, so one odd reading does not send an alert. Readings
+  more than an hour apart are not "in a row": the episode ends at the last reading, marked as a gap.
 - **Stale feed vs quiet night:** unchanged numbers at 03:00 are normal. The check is whether
   the feed's own clocks (its `last_updated` and the newest station report) still move.
 - **Empty share counts renting stations only:** a closed station with no bikes is closed, not empty.

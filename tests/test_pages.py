@@ -85,6 +85,17 @@ def test_finished_episodes_from_the_last_24_hours_only():
     assert cards[0]["duration"] == "1h 40m" and not cards[0]["ongoing"]
 
 
+def test_a_card_cut_by_a_gap_says_so():
+    rows = pd.DataFrame(
+        [{"scope": "station", "subject": "330", "state": "empty", "started_at": ago(300),
+          "ended_at": ago(285), "ended_by": "gap"}]
+    )
+
+    cards, _ = event_cards(rows, {}, NOW)
+
+    assert cards[0]["text"] == "Station 330 was empty 05:55–06:10, then no data"
+
+
 def test_cards_are_limited_and_the_rest_counted():
     rows = [("station", str(i), "empty", ago(i + 1), None) for i in range(45)]
 

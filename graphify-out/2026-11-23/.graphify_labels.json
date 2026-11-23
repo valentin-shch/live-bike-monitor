@@ -1,0 +1,19 @@
+{
+  "0": "test_detect.py",
+  "1": "fetch.py",
+  "2": "HttpError",
+  "3": "run.py",
+  "4": "test_rollup.py",
+  "5": "write_snapshot",
+  "6": "test_skeleton.py",
+  "7": "auth.py",
+  "8": "main.py",
+  "9": "models.py",
+  "10": "notify.py",
+  "11": "weather.py",
+  "12": "receiver.py",
+  "13": "build.py",
+  "14": "api/__init__.py",
+  "15": "demo/__init__.py",
+  "16": "pages/__init__.py"
+}

@@ -67,6 +67,11 @@ class Event(BaseModel):
     state: EventState
     started_at: datetime
     ended_at: datetime | None = Field(description="Missing while the episode is still going on")
+    ended_by: Literal["change", "gap"] | None = Field(
+        default=None,
+        description='"change": the state was seen changing. "gap": our data stopped for over an '
+        "hour, so ended_at is the last reading that still showed this state",
+    )
 
 
 class HourShare(BaseModel):

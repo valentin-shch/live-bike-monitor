@@ -119,7 +119,7 @@ def test_alert_fields_travel_in_the_body(make_client):
     now = datetime(2026, 11, 12, 9, 0, tzinfo=timezone.utc)
     events = pd.DataFrame(
         [{"scope": "station", "subject": "142", "state": "offline",
-          "started_at": now - timedelta(minutes=30), "ended_at": None}]
+          "started_at": now - timedelta(minutes=30), "ended_at": None, "ended_by": None}]
     )
     notifier = WebhookNotifier(client, "https://receiver.example/events", SECRET, clock=lambda: NOW)
 

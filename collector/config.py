@@ -23,6 +23,9 @@ WINDOW_MINUTES = 15
 # Two snapshots in a row = at least 30 minutes. One bad snapshot is too common to alert on,
 # and three would hide most of a short morning-peak shortage.
 MIN_EVENT_SNAPSHOTS = 2
+# Readings further apart than this are not "in a row": we did not see what happened between
+# them. One hour still lets an episode survive up to three missed windows.
+MAX_GAP = timedelta(hours=1)
 
 # "Silent" = feed_last_updated - last_reported. In the first real snapshot 95% of stations
 # had reported within 3 minutes and the next group was 5+ hours, so 60 minutes sits in the

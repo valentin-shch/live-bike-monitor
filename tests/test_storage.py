@@ -3,7 +3,14 @@ from datetime import date, datetime, timedelta, timezone
 import pandas as pd
 import pytest
 
-from collector.storage import read_snapshots, window_start, write_snapshot, write_stations
+from collector.storage import (
+    events_path,
+    read_events,
+    read_snapshots,
+    window_start,
+    write_snapshot,
+    write_stations,
+)
 
 UTC = timezone.utc
 MADRID_WINTER = timezone(timedelta(hours=1))
@@ -88,3 +95,17 @@ def test_stations_file_is_one_per_utc_day(tmp_path):
     path = write_stations(small_snapshot(5), datetime(2026, 11, 12, 23, 50, tzinfo=UTC), tmp_path)
 
     assert path == tmp_path / "stations" / "2026-11-12.parquet"
+
+
+def test_an_events_file_from_before_gaps_were_tracked_still_reads(tmp_path):
+    start = datetime(2026, 11, 12, 8, 0, tzinfo=UTC)
+    old = pd.DataFrame(
+        {"scope": ["station", "station"], "subject": ["1", "2"], "state": ["empty", "full"],
+         "started_at": [start, start], "ended_at": [start + timedelta(hours=1), pd.NaT]}
+    )
+    old.to_parquet(events_path(tmp_path), index=False)
+
+    events = read_events(tmp_path)
+
+    assert events["ended_by"].iloc[0] == "change"  # every end in an old file was a seen change
+    assert pd.isna(events["ended_by"].iloc[1])     # still ongoing

@@ -101,6 +101,8 @@ def event_cards(events, names, now, window=timedelta(hours=24), limit=MAX_CARDS)
             took = format_duration(now - e.started_at)
         else:
             text = f"{who} was {word} {local_time(e.started_at, now)}–{local_time(e.ended_at, now)}"
+            if getattr(e, "ended_by", "change") == "gap":
+                text += ", then no data"  # the last reading we have, not a recovery
             took = format_duration(e.ended_at - e.started_at)
         cards.append(
             {

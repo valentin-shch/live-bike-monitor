@@ -20,10 +20,12 @@ TOKEN = "123456:dummy-token-for-tests"
 
 
 def events(*rows):
+    """rows: (scope, subject, state, start, end[, ended_by]). An end is a seen change by default."""
     return pd.DataFrame(
         [
-            {"scope": scope, "subject": subject, "state": state, "started_at": start, "ended_at": end}
-            for scope, subject, state, start, end in rows
+            {"scope": scope, "subject": subject, "state": state, "started_at": start, "ended_at": end,
+             "ended_by": rest[0] if rest else (None if end is None else "change")}
+            for scope, subject, state, start, end, *rest in rows
         ]
     )
 
@@ -164,3 +166,11 @@ def test_flood_becomes_nine_messages_and_one_summary():
     assert len(notifier.texts) == 10
     assert notifier.texts[-1].startswith("...and 16 more events")
     assert len(sent) == 25  # the summarised ones count as sent too
+
+
+def test_an_episode_cut_by_a_gap_does_not_announce_a_recovery():
+    alerts = pending_alerts(
+        events(("station", "12", "offline", ago(90), ago(75), "gap")), NOW
+    )
+
+    assert alerts["kind"].tolist() == ["started"]  # no "back online": we never saw it come back

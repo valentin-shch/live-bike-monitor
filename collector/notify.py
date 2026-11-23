@@ -101,7 +101,9 @@ def pending_alerts(events, now, max_age=ALERT_MAX_AGE):
         worthy[col] = pd.to_datetime(worthy[col], utc=True)
 
     started = worthy.assign(kind="started", at=worthy["started_at"])
-    finished = worthy[worthy["ended_at"].notna()]
+    # An episode cut by a gap in our data did not end: we lost sight of it. "Back online" would
+    # be a guess, so only ends we actually saw become messages.
+    finished = worthy[worthy["ended_at"].notna() & (worthy["ended_by"] == "change")]
     ended = finished.assign(kind="ended", at=finished["ended_at"])
     alerts = pd.concat([started, ended], ignore_index=True)
     alerts = alerts[alerts["at"] >= now - max_age]

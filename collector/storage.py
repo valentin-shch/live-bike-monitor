@@ -7,6 +7,7 @@ from datetime import date, timedelta, timezone
 import pandas as pd
 
 from collector.config import DATA_DIR, RAW_RETENTION_DAYS, WINDOW_MINUTES
+from collector.detect import EVENT_COLUMNS
 
 log = logging.getLogger(__name__)
 
@@ -62,8 +63,12 @@ def events_path(data_dir=DATA_DIR):
 def read_events(data_dir=DATA_DIR):
     path = events_path(data_dir)
     if not path.exists():
-        return pd.DataFrame(columns=["scope", "subject", "state", "started_at", "ended_at"])
-    return pd.read_parquet(path)
+        return pd.DataFrame(columns=EVENT_COLUMNS)
+    events = pd.read_parquet(path)
+    if "ended_by" not in events:
+        # Files written before gaps were tracked: every end in them was a seen change.
+        events["ended_by"] = events["ended_at"].notna().map({True: "change", False: None})
+    return events
 
 
 def write_events(events, data_dir=DATA_DIR):
