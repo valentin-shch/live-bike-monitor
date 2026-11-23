@@ -11,9 +11,13 @@ with the last 24 hours". <!-- TODO: replace with the heatmap's finding once ther
 
 ## How it runs without me
 
-- **Trigger:** a GitHub Actions schedule, every 15 minutes at :04, :19, :34 and :49 (off the busy
-  top of the hour). Each run fetches the Bicing GBFS feed, stores a Parquet snapshot on the `data`
-  branch, fetches weather about once an hour, detects events, sends alerts and rebuilds the page.
+- **Trigger:** a small Cloudflare Worker ([trigger/worker.js](trigger/worker.js)) starts the
+  GitHub Actions workflow every 15 minutes, at :04, :19, :34 and :49. GitHub's own schedule
+  created only about 3.5 runs a day here (35 in 10 days, measured from its API), while a
+  started workflow begins within a second. The Worker's token can only start workflows in
+  this repository. GitHub's schedule stays on as a backup; a double run is harmless.
+- **Each run** fetches the Bicing GBFS feed, stores a Parquet snapshot on the `data` branch,
+  fetches weather about once an hour, detects events, sends alerts and rebuilds the page.
 - **On failure:** HTTP calls retry with backoff and jitter; a failed run still writes a run record
   and turns red; two failures in a row become an event and an alert ("feed changed shape",
   "feed not answering", "collector crashing"). If the job stops altogether, the published page
@@ -26,7 +30,9 @@ with the last 24 hours". <!-- TODO: replace with the heatmap's finding once ther
 
 GitHub disables scheduled workflows in public repositories after 60 days without repository
 activity. If that happens, the page turns red; re-enable it under Actions → collect →
-"Enable workflow". I do not count on the robot's data commits keeping it alive.
+"Enable workflow". I do not count on the robot's data commits keeping it alive. The Worker's
+token expires after a year; until it is renewed, runs fall back to GitHub's few a day, and the
+health section shows it.
 
 ## Run it locally
 
@@ -65,8 +71,8 @@ small receiver that checks the webhook's HMAC signature, timestamp and duplicate
 ## Honest limits
 
 - A few weeks of data give a hint about weekly patterns, not proof.
-- The scheduler is best-effort: runs start late (often several minutes) and some windows have
-  no data. The health section shows every gap instead of filling it.
+- The first 10 days (to 23 Nov) have only a few snapshots a day, from GitHub's schedule. Some
+  windows will always be missing; the health section shows every gap instead of filling it.
 - Weather is one model grid cell about 5 km from the centre: fine for rain or dry, not for streets.
 - Stations retired from service but still listed as renting are counted in the hourly shares
   (four of about 545).
