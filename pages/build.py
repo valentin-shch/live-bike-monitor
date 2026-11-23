@@ -23,7 +23,10 @@ HERE = Path(__file__).parent
 OUT_DIR = REPO_ROOT / "_site"
 API_DIR = REPO_ROOT / "api"
 TZ = ZoneInfo(DISPLAY_TZ)
-UPTIME_DAYS = 7
+UPTIME_DAYS = 7  # the health section: a week of strips
+# The header's uptime: the current state. A longer period would keep paying for an outage
+# long after it is fixed; the health section below shows the full week.
+HEADER_UPTIME = timedelta(hours=24)
 MAX_CARDS = 40
 # A weekday-hour cell counts only with readings from at least this many different days, and
 # the chart states a finding only once this share of the 168 cells counts. Before that, one
@@ -155,7 +158,7 @@ def timelapse(recent, info):
 
 
 def status(snapshot, events, runs, now):
-    """The header: is it live, how fresh, how reliable over the last 7 days."""
+    """The header: is it live, how fresh, how reliable over the last 24 hours."""
     if snapshot is None:
         return {"level": "down", "label": "No data yet", "last_fetch_utc": None, "uptime": None}
 
@@ -172,13 +175,16 @@ def status(snapshot, events, runs, now):
     uptime = None
     if not runs.empty:
         end = window_start(now)
-        start = max(window_start(now - timedelta(days=UPTIME_DAYS)), runs["window_utc"].min())
+        period_start = window_start(now - HEADER_UPTIME)
+        # A collector younger than the period is judged from its first run, not blamed for
+        # windows before it existed.
+        start = max(period_start, runs["window_utc"].min())
         counts = coverage(window_report(runs, start, end))
         uptime = {
             **counts,
             "share": counts["ok"] / counts["expected"] if counts["expected"] else None,
             "since": local_time(pd.Timestamp(start).to_pydatetime(), now),
-            "full_week": start <= window_start(now - timedelta(days=UPTIME_DAYS)),
+            "full_period": start <= period_start,
         }
     return {
         "level": level,

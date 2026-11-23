@@ -82,19 +82,6 @@
       "source_location": "L39"
     },
     {
-      "id": "collector_fetch_schemaerror",
-      "label": "SchemaError",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "fetch.py",
-      "file_type": "code",
-      "norm_label": "schemaerror",
-      "source_file": "collector/fetch.py",
-      "source_location": "L11"
-    },
-    {
       "id": "collector_fetch_stationinfo",
       "label": "StationInfo",
       "_callable": true,
@@ -184,6 +171,19 @@
       "norm_label": "fakenotifier",
       "source_file": "tests/test_notify.py",
       "source_location": "L37"
+    },
+    {
+      "id": "collector_fetch_schemaerror",
+      "label": "SchemaError",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "weather.py",
+      "file_type": "code",
+      "norm_label": "schemaerror",
+      "source_file": "collector/fetch.py",
+      "source_location": "L11"
     },
     {
       "id": "collector_weather_forecast",
@@ -381,18 +381,6 @@
       "source_location": "L35"
     },
     {
-      "id": "collector_detect_classify",
-      "label": "classify()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "code",
-      "norm_label": "classify()",
-      "source_file": "collector/detect.py",
-      "source_location": "L13"
-    },
-    {
       "id": "collector_detect_confirmed_episodes",
       "label": "confirmed_episodes()",
       "_callable": true,
@@ -403,18 +391,6 @@
       "norm_label": "confirmed_episodes()",
       "source_file": "collector/detect.py",
       "source_location": "L60"
-    },
-    {
-      "id": "collector_detect_detect_events",
-      "label": "detect_events()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "code",
-      "norm_label": "detect_events()",
-      "source_file": "collector/detect.py",
-      "source_location": "L75"
     },
     {
       "id": "collector_detect_episodes",
@@ -439,18 +415,6 @@
       "norm_label": "feed_checks()",
       "source_file": "collector/detect.py",
       "source_location": "L29"
-    },
-    {
-      "id": "collector_detect_merge_events",
-      "label": "merge_events()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "code",
-      "norm_label": "merge_events()",
-      "source_file": "collector/detect.py",
-      "source_location": "L91"
     },
     {
       "id": "tests_test_detect_as_tuples",
@@ -619,18 +583,6 @@
       "norm_label": "test_briefing_example_gives_one_episode()",
       "source_file": "tests/test_detect.py",
       "source_location": "L96"
-    },
-    {
-      "id": "tests_test_detect_test_classify_picks_the_first_matching_state",
-      "label": "test_classify_picks_the_first_matching_state()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "code",
-      "norm_label": "test_classify_picks_the_first_matching_state()",
-      "source_file": "tests/test_detect.py",
-      "source_location": "L73"
     },
     {
       "id": "tests_test_detect_test_clock_that_stops_is_stale",
@@ -945,18 +897,6 @@
       "source_location": "L98"
     },
     {
-      "id": "collector_run_collect",
-      "label": "collect()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "fetch.py",
-      "file_type": "code",
-      "norm_label": "collect()",
-      "source_file": "collector/run.py",
-      "source_location": "L31"
-    },
-    {
       "id": "tests_test_api_data_dir",
       "label": "data_dir()",
       "_callable": true,
@@ -967,6 +907,18 @@
       "norm_label": "data_dir()",
       "source_file": "tests/test_api.py",
       "source_location": "L26"
+    },
+    {
+      "id": "tests_test_api_load",
+      "label": "load()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "fetch.py",
+      "file_type": "code",
+      "norm_label": "load()",
+      "source_file": "tests/test_api.py",
+      "source_location": "L21"
     },
     {
       "id": "tests_test_detect_test_classify_on_the_real_snapshot_matches_the_stage_1_findings",
@@ -1099,6 +1051,18 @@
       "norm_label": "test_status_frame_finds_the_83_empty_stations()",
       "source_file": "tests/test_fetch.py",
       "source_location": "L38"
+    },
+    {
+      "id": "tests_test_pages_test_build_embeds_data_the_script_can_read",
+      "label": "test_build_embeds_data_the_script_can_read()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "fetch.py",
+      "file_type": "code",
+      "norm_label": "test_build_embeds_data_the_script_can_read()",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L184"
     },
     {
       "id": "collector_notify_batches",
@@ -1941,18 +1905,6 @@
       "source_location": "L154"
     },
     {
-      "id": "api_export_openapi_text",
-      "label": "openapi_text()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "test_pages.py",
-      "file_type": "code",
-      "norm_label": "openapi_text()",
-      "source_file": "api/export.py",
-      "source_location": "L14"
-    },
-    {
       "id": "pages_build_api_reference",
       "label": "api_reference()",
       "_callable": true,
@@ -1962,7 +1914,7 @@
       "file_type": "code",
       "norm_label": "api_reference()",
       "source_file": "pages/build.py",
-      "source_location": "L341"
+      "source_location": "L347"
     },
     {
       "id": "pages_build_build",
@@ -1974,7 +1926,7 @@
       "file_type": "code",
       "norm_label": "build()",
       "source_file": "pages/build.py",
-      "source_location": "L423"
+      "source_location": "L429"
     },
     {
       "id": "pages_build_empty_heatmap",
@@ -1986,7 +1938,7 @@
       "file_type": "code",
       "norm_label": "empty_heatmap()",
       "source_file": "pages/build.py",
-      "source_location": "L210"
+      "source_location": "L216"
     },
     {
       "id": "pages_build_event_cards",
@@ -1998,7 +1950,7 @@
       "file_type": "code",
       "norm_label": "event_cards()",
       "source_file": "pages/build.py",
-      "source_location": "L84"
+      "source_location": "L87"
     },
     {
       "id": "pages_build_format_duration",
@@ -2010,7 +1962,7 @@
       "file_type": "code",
       "norm_label": "format_duration()",
       "source_file": "pages/build.py",
-      "source_location": "L60"
+      "source_location": "L63"
     },
     {
       "id": "pages_build_headline",
@@ -2022,7 +1974,7 @@
       "file_type": "code",
       "norm_label": "headline()",
       "source_file": "pages/build.py",
-      "source_location": "L192"
+      "source_location": "L198"
     },
     {
       "id": "pages_build_health_section",
@@ -2034,7 +1986,7 @@
       "file_type": "code",
       "norm_label": "health_section()",
       "source_file": "pages/build.py",
-      "source_location": "L254"
+      "source_location": "L260"
     },
     {
       "id": "pages_build_local_time",
@@ -2046,7 +1998,7 @@
       "file_type": "code",
       "norm_label": "local_time()",
       "source_file": "pages/build.py",
-      "source_location": "L72"
+      "source_location": "L75"
     },
     {
       "id": "pages_build_render",
@@ -2058,7 +2010,7 @@
       "file_type": "code",
       "norm_label": "render()",
       "source_file": "pages/build.py",
-      "source_location": "L414"
+      "source_location": "L420"
     },
     {
       "id": "pages_build_rules",
@@ -2070,7 +2022,7 @@
       "file_type": "code",
       "norm_label": "rules()",
       "source_file": "pages/build.py",
-      "source_location": "L332"
+      "source_location": "L338"
     },
     {
       "id": "pages_build_safe_json",
@@ -2082,7 +2034,7 @@
       "file_type": "code",
       "norm_label": "safe_json()",
       "source_file": "pages/build.py",
-      "source_location": "L379"
+      "source_location": "L385"
     },
     {
       "id": "pages_build_site_context",
@@ -2094,7 +2046,7 @@
       "file_type": "code",
       "norm_label": "site_context()",
       "source_file": "pages/build.py",
-      "source_location": "L385"
+      "source_location": "L391"
     },
     {
       "id": "pages_build_status",
@@ -2106,7 +2058,7 @@
       "file_type": "code",
       "norm_label": "status()",
       "source_file": "pages/build.py",
-      "source_location": "L157"
+      "source_location": "L160"
     },
     {
       "id": "pages_build_timelapse",
@@ -2118,7 +2070,7 @@
       "file_type": "code",
       "norm_label": "timelapse()",
       "source_file": "pages/build.py",
-      "source_location": "L125"
+      "source_location": "L128"
     },
     {
       "id": "pages_build_type_label",
@@ -2130,19 +2082,7 @@
       "file_type": "code",
       "norm_label": "type_label()",
       "source_file": "pages/build.py",
-      "source_location": "L321"
-    },
-    {
-      "id": "tests_test_api_load",
-      "label": "load()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "test_pages.py",
-      "file_type": "code",
-      "norm_label": "load()",
-      "source_file": "tests/test_api.py",
-      "source_location": "L21"
+      "source_location": "L327"
     },
     {
       "id": "tests_test_pages_ago",
@@ -2178,7 +2118,7 @@
       "file_type": "code",
       "norm_label": "hourly_rows()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L189"
+      "source_location": "L206"
     },
     {
       "id": "tests_test_pages_snapshot",
@@ -2214,7 +2154,7 @@
       "file_type": "code",
       "norm_label": "test_a_cell_from_one_day_cannot_become_the_headline()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L224"
+      "source_location": "L241"
     },
     {
       "id": "tests_test_pages_test_a_station_name_cannot_break_out_of_the_script_tag",
@@ -2226,31 +2166,7 @@
       "file_type": "code",
       "norm_label": "test_a_station_name_cannot_break_out_of_the_script_tag()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L152"
-    },
-    {
-      "id": "tests_test_pages_test_api_reference_uses_saved_samples_when_present",
-      "label": "test_api_reference_uses_saved_samples_when_present()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "test_pages.py",
-      "file_type": "code",
-      "norm_label": "test_api_reference_uses_saved_samples_when_present()",
-      "source_file": "tests/test_pages.py",
-      "source_location": "L278"
-    },
-    {
-      "id": "tests_test_pages_test_build_embeds_data_the_script_can_read",
-      "label": "test_build_embeds_data_the_script_can_read()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 13,
-      "community_name": "test_pages.py",
-      "file_type": "code",
-      "norm_label": "test_build_embeds_data_the_script_can_read()",
-      "source_file": "tests/test_pages.py",
-      "source_location": "L167"
+      "source_location": "L169"
     },
     {
       "id": "tests_test_pages_test_build_with_no_data_still_makes_a_page",
@@ -2262,7 +2178,7 @@
       "file_type": "code",
       "norm_label": "test_build_with_no_data_still_makes_a_page()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L159"
+      "source_location": "L176"
     },
     {
       "id": "tests_test_pages_test_build_writes_the_api_page_and_openapi_file",
@@ -2274,7 +2190,7 @@
       "file_type": "code",
       "norm_label": "test_build_writes_the_api_page_and_openapi_file()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L292"
+      "source_location": "L309"
     },
     {
       "id": "tests_test_pages_test_card_reads_like_the_brief",
@@ -2325,6 +2241,18 @@
       "source_location": "L38"
     },
     {
+      "id": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "label": "test_header_uptime_covers_the_last_24_hours_only()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "test_pages.py",
+      "file_type": "code",
+      "norm_label": "test_header_uptime_covers_the_last_24_hours_only()",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L150"
+    },
+    {
       "id": "tests_test_pages_test_health_strips_gaps_and_lateness",
       "label": "test_health_strips_gaps_and_lateness()",
       "_callable": true,
@@ -2334,7 +2262,7 @@
       "file_type": "code",
       "norm_label": "test_health_strips_gaps_and_lateness()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L244"
+      "source_location": "L261"
     },
     {
       "id": "tests_test_pages_test_heatmap_title_states_the_peak_in_madrid_time",
@@ -2346,7 +2274,7 @@
       "file_type": "code",
       "norm_label": "test_heatmap_title_states_the_peak_in_madrid_time()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L196"
+      "source_location": "L213"
     },
     {
       "id": "tests_test_pages_test_local_time_adds_the_day_only_when_it_is_not_today",
@@ -2370,7 +2298,7 @@
       "file_type": "code",
       "norm_label": "test_no_history_no_heatmap()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L238"
+      "source_location": "L255"
     },
     {
       "id": "tests_test_pages_test_ongoing_feed_problems_are_pinned_and_retired_stations_left_out",
@@ -2394,7 +2322,7 @@
       "file_type": "code",
       "norm_label": "test_sparse_history_shows_progress_not_a_finding()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L215"
+      "source_location": "L232"
     },
     {
       "id": "tests_test_pages_test_status_levels",
@@ -2430,7 +2358,7 @@
       "file_type": "code",
       "norm_label": "test_type_labels_and_rules_from_openapi()",
       "source_file": "tests/test_pages.py",
-      "source_location": "L270"
+      "source_location": "L287"
     },
     {
       "id": "trigger_worker_scheduled",
@@ -2443,6 +2371,18 @@
       "norm_label": "scheduled()",
       "source_file": "trigger/worker.js",
       "source_location": "L13"
+    },
+    {
+      "id": "tests_test_run_isolated",
+      "label": "isolated()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "isolated",
+      "file_type": "code",
+      "norm_label": "isolated()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L18"
     },
     {
       "id": "collector_http_httpclient_get_json",
@@ -2503,42 +2443,6 @@
       "norm_label": ".__init__()",
       "source_file": "collector/http.py",
       "source_location": "L18"
-    },
-    {
-      "id": "collector_monitor_read_runs",
-      "label": "read_runs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "read_runs()",
-      "source_file": "collector/monitor.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "collector_run_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "collector/run.py",
-      "source_location": "L101"
-    },
-    {
-      "id": "collector_run_run",
-      "label": "run()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "run()",
-      "source_file": "collector/run.py",
-      "source_location": "L48"
     },
     {
       "id": "tests_conftest_fakeadapter_close",
@@ -2745,184 +2649,16 @@
       "source_location": "L81"
     },
     {
-      "id": "tests_test_run_isolated",
-      "label": "isolated()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "isolated()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L18"
-    },
-    {
-      "id": "tests_test_run_recorded_feeds",
-      "label": "recorded_feeds()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "recorded_feeds()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L26"
-    },
-    {
-      "id": "tests_test_run_test_a_bug_is_recorded_as_crashed_instead_of_vanishing",
-      "label": "test_a_bug_is_recorded_as_crashed_instead_of_vanishing()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_a_bug_is_recorded_as_crashed_instead_of_vanishing()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L71"
-    },
-    {
-      "id": "tests_test_run_test_a_bug_is_recorded_as_crashed_instead_of_vanishing_buggy",
-      "label": "buggy()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "buggy()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L72"
-    },
-    {
-      "id": "tests_test_run_test_failed_collections_are_recorded_and_become_an_event",
-      "label": "test_failed_collections_are_recorded_and_become_an_event()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_failed_collections_are_recorded_and_become_an_event()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L57"
-    },
-    {
-      "id": "tests_test_run_test_failed_collections_are_recorded_and_become_an_event_schema_changed",
-      "label": "schema_changed()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "schema_changed()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L58"
-    },
-    {
-      "id": "tests_test_run_test_main_exits_with_0_on_success",
-      "label": "test_main_exits_with_0_on_success()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_main_exits_with_0_on_success()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L92"
-    },
-    {
-      "id": "tests_test_run_test_main_exits_with_1_when_the_feed_is_down",
-      "label": "test_main_exits_with_1_when_the_feed_is_down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_main_exits_with_1_when_the_feed_is_down()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L81"
-    },
-    {
-      "id": "tests_test_run_test_main_exits_with_1_when_the_feed_is_down_feed_down",
-      "label": "feed_down()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "feed_down()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L82"
-    },
-    {
-      "id": "tests_test_run_test_run_writes_snapshot_stations_and_a_run_record",
-      "label": "test_run_writes_snapshot_stations_and_a_run_record()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_run_writes_snapshot_stations_and_a_run_record()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "tests_test_run_test_two_runs_save_the_confirmed_station_events",
-      "label": "test_two_runs_save_the_confirmed_station_events()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_two_runs_save_the_confirmed_station_events()",
-      "source_file": "tests/test_run.py",
-      "source_location": "L45"
-    },
-    {
-      "id": "tests_test_skeleton_test_data_dir_is_inside_the_repo",
-      "label": "test_data_dir_is_inside_the_repo()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_data_dir_is_inside_the_repo()",
-      "source_file": "tests/test_skeleton.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "tests_test_skeleton_test_every_module_imports",
-      "label": "test_every_module_imports()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_every_module_imports()",
-      "source_file": "tests/test_skeleton.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "collector_run_update_events",
-      "label": "update_events()",
+      "id": "collector_run_collect",
+      "label": "collect()",
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
-      "norm_label": "update_events()",
+      "norm_label": "collect()",
       "source_file": "collector/run.py",
-      "source_location": "L79"
-    },
-    {
-      "id": "collector_storage_alerts_sent_path",
-      "label": "alerts_sent_path()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "alerts_sent_path()",
-      "source_file": "collector/storage.py",
-      "source_location": "L80"
+      "source_location": "L31"
     },
     {
       "id": "collector_storage_apply_retention",
@@ -2930,23 +2666,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "apply_retention()",
       "source_file": "collector/storage.py",
       "source_location": "L132"
-    },
-    {
-      "id": "collector_storage_events_path",
-      "label": "events_path()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "events_path()",
-      "source_file": "collector/storage.py",
-      "source_location": "L59"
     },
     {
       "id": "collector_storage_hourly_path",
@@ -2954,7 +2678,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "hourly_path()",
       "source_file": "collector/storage.py",
@@ -2966,7 +2690,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "maintain()",
       "source_file": "collector/storage.py",
@@ -2978,47 +2702,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "raw_days()",
       "source_file": "collector/storage.py",
       "source_location": "L128"
-    },
-    {
-      "id": "collector_storage_read_alerts_sent",
-      "label": "read_alerts_sent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "read_alerts_sent()",
-      "source_file": "collector/storage.py",
-      "source_location": "L84"
-    },
-    {
-      "id": "collector_storage_read_all_snapshots",
-      "label": "read_all_snapshots()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "read_all_snapshots()",
-      "source_file": "collector/storage.py",
-      "source_location": "L52"
-    },
-    {
-      "id": "collector_storage_read_events",
-      "label": "read_events()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "read_events()",
-      "source_file": "collector/storage.py",
-      "source_location": "L63"
     },
     {
       "id": "collector_storage_read_snapshots",
@@ -3026,7 +2714,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "read_snapshots()",
       "source_file": "collector/storage.py",
@@ -3038,7 +2726,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "roll_up_day()",
       "source_file": "collector/storage.py",
@@ -3050,7 +2738,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "snapshot_path()",
       "source_file": "collector/storage.py",
@@ -3062,47 +2750,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "window_start()",
       "source_file": "collector/storage.py",
       "source_location": "L15"
-    },
-    {
-      "id": "collector_storage_write_alerts_sent",
-      "label": "write_alerts_sent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "write_alerts_sent()",
-      "source_file": "collector/storage.py",
-      "source_location": "L91"
-    },
-    {
-      "id": "collector_storage_write_atomically",
-      "label": "write_atomically()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "write_atomically()",
-      "source_file": "collector/storage.py",
-      "source_location": "L159"
-    },
-    {
-      "id": "collector_storage_write_events",
-      "label": "write_events()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "write_events()",
-      "source_file": "collector/storage.py",
-      "source_location": "L74"
     },
     {
       "id": "collector_storage_write_snapshot",
@@ -3110,7 +2762,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "write_snapshot()",
       "source_file": "collector/storage.py",
@@ -3122,7 +2774,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "write_stations()",
       "source_file": "collector/storage.py",
@@ -3134,7 +2786,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "at()",
       "source_file": "tests/test_rollup.py",
@@ -3146,7 +2798,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "one_station()",
       "source_file": "tests/test_rollup.py",
@@ -3158,7 +2810,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_day_without_snapshots_has_nothing_to_roll_up()",
       "source_file": "tests/test_rollup.py",
@@ -3170,7 +2822,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_full_and_renting_shares()",
       "source_file": "tests/test_rollup.py",
@@ -3182,7 +2834,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_hour_with_a_skipped_run_is_summarised_from_what_exists()",
       "source_file": "tests/test_rollup.py",
@@ -3194,7 +2846,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_maintain_rolls_up_finished_days_but_not_today()",
       "source_file": "tests/test_rollup.py",
@@ -3206,7 +2858,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_one_row_per_station_per_hour()",
       "source_file": "tests/test_rollup.py",
@@ -3218,7 +2870,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_raw_day_is_never_deleted_without_its_hourly_summary()",
       "source_file": "tests/test_rollup.py",
@@ -3230,7 +2882,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_retention_keeps_exactly_fourteen_days()",
       "source_file": "tests/test_rollup.py",
@@ -3242,23 +2894,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "small_snapshot()",
       "source_file": "tests/test_storage.py",
       "source_location": "L19"
-    },
-    {
-      "id": "tests_test_storage_test_an_events_file_from_before_gaps_were_tracked_still_reads",
-      "label": "test_an_events_file_from_before_gaps_were_tracked_still_reads()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "test_an_events_file_from_before_gaps_were_tracked_still_reads()",
-      "source_file": "tests/test_storage.py",
-      "source_location": "L100"
     },
     {
       "id": "tests_test_storage_test_late_evening_utc_stays_in_the_utc_day",
@@ -3266,7 +2906,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_late_evening_utc_stays_in_the_utc_day()",
       "source_file": "tests/test_storage.py",
@@ -3278,7 +2918,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_leftover_tmp_file_is_ignored_by_the_reader()",
       "source_file": "tests/test_storage.py",
@@ -3290,7 +2930,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_naive_timestamp_is_refused()",
       "source_file": "tests/test_storage.py",
@@ -3302,7 +2942,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_reading_a_day_with_no_data_gives_an_empty_table()",
       "source_file": "tests/test_storage.py",
@@ -3314,7 +2954,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_rerun_in_the_same_window_replaces_instead_of_duplicating()",
       "source_file": "tests/test_storage.py",
@@ -3326,7 +2966,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_snapshot_goes_to_day_folder_and_window_file()",
       "source_file": "tests/test_storage.py",
@@ -3338,7 +2978,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_stations_file_is_one_per_utc_day()",
       "source_file": "tests/test_storage.py",
@@ -3350,7 +2990,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_two_windows_give_two_snapshots()",
       "source_file": "tests/test_storage.py",
@@ -3362,11 +3002,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_window_start_rounds_down_to_the_utc_quarter_hour()",
       "source_file": "tests/test_storage.py",
       "source_location": "L41"
+    },
+    {
+      "id": "api_data_station_order",
+      "label": "station_order()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "station_order()",
+      "source_file": "api/data.py",
+      "source_location": "L12"
+    },
+    {
+      "id": "collector_detect_detect_events",
+      "label": "detect_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "detect_events()",
+      "source_file": "collector/detect.py",
+      "source_location": "L75"
+    },
+    {
+      "id": "collector_detect_merge_events",
+      "label": "merge_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "merge_events()",
+      "source_file": "collector/detect.py",
+      "source_location": "L91"
     },
     {
       "id": "collector_monitor_collection_events",
@@ -3403,6 +3079,18 @@
       "norm_label": "_last_run_per_window()",
       "source_file": "collector/monitor.py",
       "source_location": "L34"
+    },
+    {
+      "id": "collector_monitor_read_runs",
+      "label": "read_runs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "read_runs()",
+      "source_file": "collector/monitor.py",
+      "source_location": "L27"
     },
     {
       "id": "collector_monitor_runs_path",
@@ -3451,6 +3139,138 @@
       "norm_label": "write_run()",
       "source_file": "collector/monitor.py",
       "source_location": "L16"
+    },
+    {
+      "id": "collector_run_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "collector/run.py",
+      "source_location": "L101"
+    },
+    {
+      "id": "collector_run_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "collector/run.py",
+      "source_location": "L48"
+    },
+    {
+      "id": "collector_run_update_events",
+      "label": "update_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "update_events()",
+      "source_file": "collector/run.py",
+      "source_location": "L79"
+    },
+    {
+      "id": "collector_storage_alerts_sent_path",
+      "label": "alerts_sent_path()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "alerts_sent_path()",
+      "source_file": "collector/storage.py",
+      "source_location": "L80"
+    },
+    {
+      "id": "collector_storage_events_path",
+      "label": "events_path()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "events_path()",
+      "source_file": "collector/storage.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "collector_storage_read_alerts_sent",
+      "label": "read_alerts_sent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "read_alerts_sent()",
+      "source_file": "collector/storage.py",
+      "source_location": "L84"
+    },
+    {
+      "id": "collector_storage_read_all_snapshots",
+      "label": "read_all_snapshots()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "read_all_snapshots()",
+      "source_file": "collector/storage.py",
+      "source_location": "L52"
+    },
+    {
+      "id": "collector_storage_read_events",
+      "label": "read_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "read_events()",
+      "source_file": "collector/storage.py",
+      "source_location": "L63"
+    },
+    {
+      "id": "collector_storage_write_alerts_sent",
+      "label": "write_alerts_sent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "write_alerts_sent()",
+      "source_file": "collector/storage.py",
+      "source_location": "L91"
+    },
+    {
+      "id": "collector_storage_write_atomically",
+      "label": "write_atomically()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "write_atomically()",
+      "source_file": "collector/storage.py",
+      "source_location": "L159"
+    },
+    {
+      "id": "collector_storage_write_events",
+      "label": "write_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "write_events()",
+      "source_file": "collector/storage.py",
+      "source_location": "L74"
     },
     {
       "id": "tests_test_monitor_runs",
@@ -3573,6 +3393,162 @@
       "source_location": "L85"
     },
     {
+      "id": "tests_test_run_recorded_feeds",
+      "label": "recorded_feeds()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "recorded_feeds()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L26"
+    },
+    {
+      "id": "tests_test_run_test_a_bug_is_recorded_as_crashed_instead_of_vanishing",
+      "label": "test_a_bug_is_recorded_as_crashed_instead_of_vanishing()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_a_bug_is_recorded_as_crashed_instead_of_vanishing()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "tests_test_run_test_a_bug_is_recorded_as_crashed_instead_of_vanishing_buggy",
+      "label": "buggy()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "buggy()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L72"
+    },
+    {
+      "id": "tests_test_run_test_failed_collections_are_recorded_and_become_an_event",
+      "label": "test_failed_collections_are_recorded_and_become_an_event()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_failed_collections_are_recorded_and_become_an_event()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L57"
+    },
+    {
+      "id": "tests_test_run_test_failed_collections_are_recorded_and_become_an_event_schema_changed",
+      "label": "schema_changed()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "schema_changed()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L58"
+    },
+    {
+      "id": "tests_test_run_test_main_exits_with_0_on_success",
+      "label": "test_main_exits_with_0_on_success()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_main_exits_with_0_on_success()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L92"
+    },
+    {
+      "id": "tests_test_run_test_main_exits_with_1_when_the_feed_is_down",
+      "label": "test_main_exits_with_1_when_the_feed_is_down()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_main_exits_with_1_when_the_feed_is_down()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L81"
+    },
+    {
+      "id": "tests_test_run_test_main_exits_with_1_when_the_feed_is_down_feed_down",
+      "label": "feed_down()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "feed_down()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L82"
+    },
+    {
+      "id": "tests_test_run_test_run_writes_snapshot_stations_and_a_run_record",
+      "label": "test_run_writes_snapshot_stations_and_a_run_record()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_run_writes_snapshot_stations_and_a_run_record()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "tests_test_run_test_two_runs_save_the_confirmed_station_events",
+      "label": "test_two_runs_save_the_confirmed_station_events()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_two_runs_save_the_confirmed_station_events()",
+      "source_file": "tests/test_run.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "tests_test_storage_test_an_events_file_from_before_gaps_were_tracked_still_reads",
+      "label": "test_an_events_file_from_before_gaps_were_tracked_still_reads()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_an_events_file_from_before_gaps_were_tracked_still_reads()",
+      "source_file": "tests/test_storage.py",
+      "source_location": "L100"
+    },
+    {
+      "id": "tests_test_skeleton_test_data_dir_is_inside_the_repo",
+      "label": "test_data_dir_is_inside_the_repo()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "test_skeleton.py",
+      "file_type": "code",
+      "norm_label": "test_data_dir_is_inside_the_repo()",
+      "source_file": "tests/test_skeleton.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "tests_test_skeleton_test_every_module_imports",
+      "label": "test_every_module_imports()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "test_skeleton.py",
+      "file_type": "code",
+      "norm_label": "test_every_module_imports()",
+      "source_file": "tests/test_skeleton.py",
+      "source_location": "L20"
+    },
+    {
       "id": "api_data_as_records",
       "label": "as_records()",
       "_callable": true,
@@ -3597,18 +3573,6 @@
       "source_location": "L17"
     },
     {
-      "id": "api_data_station_order",
-      "label": "station_order()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "code",
-      "norm_label": "station_order()",
-      "source_file": "api/data.py",
-      "source_location": "L12"
-    },
-    {
       "id": "api_export_main",
       "label": "main()",
       "_callable": true,
@@ -3619,6 +3583,18 @@
       "norm_label": "main()",
       "source_file": "api/export.py",
       "source_location": "L18"
+    },
+    {
+      "id": "api_export_openapi_text",
+      "label": "openapi_text()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "test_api.py",
+      "file_type": "code",
+      "norm_label": "openapi_text()",
+      "source_file": "api/export.py",
+      "source_location": "L14"
     },
     {
       "id": "api_main_create_app",
@@ -3945,6 +3921,18 @@
       "source_location": "L159"
     },
     {
+      "id": "tests_test_pages_test_api_reference_uses_saved_samples_when_present",
+      "label": "test_api_reference_uses_saved_samples_when_present()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "test_api.py",
+      "file_type": "code",
+      "norm_label": "test_api_reference_uses_saved_samples_when_present()",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L295"
+    },
+    {
       "id": "api_data_repository_current_stations",
       "label": ".current_stations()",
       "_callable": true,
@@ -4041,15 +4029,28 @@
       "source_location": "L47"
     },
     {
-      "id": "collector_detect",
-      "label": "detect.py",
+      "id": "collector_detect_classify",
+      "label": "classify()",
+      "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
+      "community": 9,
+      "community_name": "Repository",
       "file_type": "code",
-      "norm_label": "detect.py",
+      "norm_label": "classify()",
       "source_file": "collector/detect.py",
-      "source_location": "L1"
+      "source_location": "L13"
+    },
+    {
+      "id": "tests_test_detect_test_classify_picks_the_first_matching_state",
+      "label": "test_classify_picks_the_first_matching_state()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Repository",
+      "file_type": "code",
+      "norm_label": "test_classify_picks_the_first_matching_state()",
+      "source_file": "tests/test_detect.py",
+      "source_location": "L73"
     },
     {
       "id": "tests_test_detect",
@@ -4061,39 +4062,6 @@
       "norm_label": "test_detect.py",
       "source_file": "tests/test_detect.py",
       "source_location": "L1"
-    },
-    {
-      "id": "tests_test_detect_py_parametrize",
-      "label": "parametrize",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "code",
-      "norm_label": "parametrize",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "collector_detect_rationale_1",
-      "label": "Change detection. Pure functions: snapshots in, events out.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "rationale",
-      "norm_label": "change detection. pure functions: snapshots in, events out.",
-      "source_file": "collector/detect.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "collector_detect_rationale_14",
-      "label": "Give every row exactly one state. The first matching rule wins, so the order\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "rationale",
-      "norm_label": "give every row exactly one state. the first matching rule wins, so the order...",
-      "source_file": "collector/detect.py",
-      "source_location": "L14"
     },
     {
       "id": "collector_detect_rationale_30",
@@ -4116,28 +4084,6 @@
       "norm_label": "turn per-window states into episodes: subject x was in state y from a to b....",
       "source_file": "collector/detect.py",
       "source_location": "L61"
-    },
-    {
-      "id": "collector_detect_rationale_76",
-      "label": "Every confirmed episode in the snapshots, stations and feed together.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "rationale",
-      "norm_label": "every confirmed episode in the snapshots, stations and feed together.",
-      "source_file": "collector/detect.py",
-      "source_location": "L76"
-    },
-    {
-      "id": "collector_detect_rationale_92",
-      "label": "Combine the saved event history with episodes recomputed from the raw days we\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "file_type": "rationale",
-      "norm_label": "combine the saved event history with episodes recomputed from the raw days we...",
-      "source_file": "collector/detect.py",
-      "source_location": "L92"
     },
     {
       "id": "tests_test_detect_rationale_140",
@@ -4191,17 +4137,6 @@
       "community_name": "fetch.py",
       "file_type": "code",
       "norm_label": "basemodel",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "collector_fetch_py_exception",
-      "label": "Exception",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "fetch.py",
-      "file_type": "code",
-      "norm_label": "exception",
       "source_file": "",
       "source_location": ""
     },
@@ -4448,6 +4383,17 @@
       "source_location": "L26"
     },
     {
+      "id": "collector_fetch_py_exception",
+      "label": "Exception",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "weather.py",
+      "file_type": "code",
+      "norm_label": "exception",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "collector_weather",
       "label": "weather.py",
       "_origin": "ast",
@@ -4613,7 +4559,7 @@
       "source_location": "L1"
     },
     {
-      "id": "pages_build_rationale_126",
+      "id": "pages_build_rationale_129",
       "label": "Everything the map needs, in a compact shape: one entry per station, one letter\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4621,21 +4567,21 @@
       "file_type": "rationale",
       "norm_label": "everything the map needs, in a compact shape: one entry per station, one letter...",
       "source_file": "pages/build.py",
-      "source_location": "L126"
+      "source_location": "L129"
     },
     {
-      "id": "pages_build_rationale_158",
-      "label": "The header: is it live, how fresh, how reliable over the last 7 days.",
+      "id": "pages_build_rationale_161",
+      "label": "The header: is it live, how fresh, how reliable over the last 24 hours.",
       "_origin": "ast",
       "community": 13,
       "community_name": "test_pages.py",
       "file_type": "rationale",
-      "norm_label": "the header: is it live, how fresh, how reliable over the last 7 days.",
+      "norm_label": "the header: is it live, how fresh, how reliable over the last 24 hours.",
       "source_file": "pages/build.py",
-      "source_location": "L158"
+      "source_location": "L161"
     },
     {
-      "id": "pages_build_rationale_193",
+      "id": "pages_build_rationale_199",
       "label": "The finding for the first screen: how many working stations are empty or full\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4643,10 +4589,10 @@
       "file_type": "rationale",
       "norm_label": "the finding for the first screen: how many working stations are empty or full...",
       "source_file": "pages/build.py",
-      "source_location": "L193"
+      "source_location": "L199"
     },
     {
-      "id": "pages_build_rationale_211",
+      "id": "pages_build_rationale_217",
       "label": "Share of working stations empty, by Madrid weekday (rows) and hour (columns).\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4654,10 +4600,10 @@
       "file_type": "rationale",
       "norm_label": "share of working stations empty, by madrid weekday (rows) and hour (columns)....",
       "source_file": "pages/build.py",
-      "source_location": "L211"
+      "source_location": "L217"
     },
     {
-      "id": "pages_build_rationale_255",
+      "id": "pages_build_rationale_261",
       "label": "Expected vs actual runs, the gaps, how late GitHub starts us, and feed\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4665,10 +4611,10 @@
       "file_type": "rationale",
       "norm_label": "expected vs actual runs, the gaps, how late github starts us, and feed...",
       "source_file": "pages/build.py",
-      "source_location": "L255"
+      "source_location": "L261"
     },
     {
-      "id": "pages_build_rationale_322",
+      "id": "pages_build_rationale_328",
       "label": "A short human type for a parameter, from its OpenAPI schema.",
       "_origin": "ast",
       "community": 13,
@@ -4676,10 +4622,10 @@
       "file_type": "rationale",
       "norm_label": "a short human type for a parameter, from its openapi schema.",
       "source_file": "pages/build.py",
-      "source_location": "L322"
+      "source_location": "L328"
     },
     {
-      "id": "pages_build_rationale_380",
+      "id": "pages_build_rationale_386",
       "label": "JSON that can sit inside a <script> tag. A station name containing \"</script>\"\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4687,10 +4633,10 @@
       "file_type": "rationale",
       "norm_label": "json that can sit inside a <script> tag. a station name containing \"</script>\"...",
       "source_file": "pages/build.py",
-      "source_location": "L380"
+      "source_location": "L386"
     },
     {
-      "id": "pages_build_rationale_61",
+      "id": "pages_build_rationale_64",
       "label": "1h 40m, 25m, 2d 3h: the shape the brief asks for, short enough for a phone.",
       "_origin": "ast",
       "community": 13,
@@ -4698,10 +4644,10 @@
       "file_type": "rationale",
       "norm_label": "1h 40m, 25m, 2d 3h: the shape the brief asks for, short enough for a phone.",
       "source_file": "pages/build.py",
-      "source_location": "L61"
+      "source_location": "L64"
     },
     {
-      "id": "pages_build_rationale_73",
+      "id": "pages_build_rationale_76",
       "label": "Madrid time. The day is added only when it is not today, so most cards stay\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4709,10 +4655,10 @@
       "file_type": "rationale",
       "norm_label": "madrid time. the day is added only when it is not today, so most cards stay...",
       "source_file": "pages/build.py",
-      "source_location": "L73"
+      "source_location": "L76"
     },
     {
-      "id": "pages_build_rationale_85",
+      "id": "pages_build_rationale_88",
       "label": "Plain-language log entries, newest change first. Ongoing feed problems are\u2026",
       "_origin": "ast",
       "community": 13,
@@ -4720,10 +4666,10 @@
       "file_type": "rationale",
       "norm_label": "plain-language log entries, newest change first. ongoing feed problems are...",
       "source_file": "pages/build.py",
-      "source_location": "L85"
+      "source_location": "L88"
     },
     {
-      "id": "tests_test_pages_rationale_190",
+      "id": "tests_test_pages_rationale_207",
       "label": "rows: (UTC timestamp, empty_share, renting_share).",
       "_origin": "ast",
       "community": 13,
@@ -4731,7 +4677,7 @@
       "file_type": "rationale",
       "norm_label": "rows: (utc timestamp, empty_share, renting_share).",
       "source_file": "tests/test_pages.py",
-      "source_location": "L190"
+      "source_location": "L207"
     },
     {
       "id": "api_init",
@@ -4778,6 +4724,28 @@
       "source_location": "L1"
     },
     {
+      "id": "tests_test_run_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "isolated",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_run_rationale_19",
+      "label": "Every test here: no weather call (tested on its own) and no real notifier,\u2026",
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "isolated",
+      "file_type": "rationale",
+      "norm_label": "every test here: no weather call (tested on its own) and no real notifier,...",
+      "source_file": "tests/test_run.py",
+      "source_location": "L19"
+    },
+    {
       "id": "collector_http",
       "label": "http.py",
       "_origin": "ast",
@@ -4798,17 +4766,6 @@
       "norm_label": "exception",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "collector_init",
-      "label": "collector/__init__.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "collector/__init__.py",
-      "source_file": "collector/__init__.py",
-      "source_location": null
     },
     {
       "id": "tests_conftest",
@@ -4841,39 +4798,6 @@
       "file_type": "code",
       "norm_label": "test_http.py",
       "source_file": "tests/test_http.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_run",
-      "label": "test_run.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_run.py",
-      "source_file": "tests/test_run.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_run_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_skeleton",
-      "label": "test_skeleton.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "code",
-      "norm_label": "test_skeleton.py",
-      "source_file": "tests/test_skeleton.py",
       "source_location": "L1"
     },
     {
@@ -4910,17 +4834,6 @@
       "source_location": "L91"
     },
     {
-      "id": "collector_run_rationale_49",
-      "label": "Collect, record what happened, then update events and alerts. The record and\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "rationale",
-      "norm_label": "collect, record what happened, then update events and alerts. the record and...",
-      "source_file": "collector/run.py",
-      "source_location": "L49"
-    },
-    {
       "id": "tests_conftest_rationale_8",
       "label": "Plays a script of answers instead of touching the network. Each script item is\u2026",
       "_origin": "ast",
@@ -4932,44 +4845,11 @@
       "source_location": "L8"
     },
     {
-      "id": "tests_test_run_rationale_19",
-      "label": "Every test here: no weather call (tested on its own) and no real notifier,\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "HttpError",
-      "file_type": "rationale",
-      "norm_label": "every test here: no weather call (tested on its own) and no real notifier,...",
-      "source_file": "tests/test_run.py",
-      "source_location": "L19"
-    },
-    {
-      "id": "collector_run",
-      "label": "run.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "run.py",
-      "source_file": "collector/run.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "collector_storage",
-      "label": "storage.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "code",
-      "norm_label": "storage.py",
-      "source_file": "collector/storage.py",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_test_rollup",
       "label": "test_rollup.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_rollup.py",
       "source_file": "tests/test_rollup.py",
@@ -4980,7 +4860,7 @@
       "label": "parametrize",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "parametrize",
       "source_file": "",
@@ -4991,7 +4871,7 @@
       "label": "test_storage.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "test_storage.py",
       "source_file": "tests/test_storage.py",
@@ -5002,40 +4882,18 @@
       "label": "parametrize",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "code",
       "norm_label": "parametrize",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "collector_run_rationale_1",
-      "label": "One scheduled run: python -m collector.run",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "rationale",
-      "norm_label": "one scheduled run: python -m collector.run",
-      "source_file": "collector/run.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "collector_storage_rationale_1",
-      "label": "Partitioned files and retention.",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "rationale",
-      "norm_label": "partitioned files and retention.",
-      "source_file": "collector/storage.py",
-      "source_location": "L1"
-    },
-    {
       "id": "collector_storage_rationale_103",
       "label": "Summarise one UTC day of raw snapshots into one row per station per hour.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "rationale",
       "norm_label": "summarise one utc day of raw snapshots into one row per station per hour.",
       "source_file": "collector/storage.py",
@@ -5046,7 +4904,7 @@
       "label": "Roll up every finished day that has no summary yet, then drop old raw data.\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "rationale",
       "norm_label": "roll up every finished day that has no summary yet, then drop old raw data....",
       "source_file": "collector/storage.py",
@@ -5057,33 +4915,55 @@
       "label": "Save one window's snapshot. A rerun in the same window replaces the file, so\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "rationale",
       "norm_label": "save one window's snapshot. a rerun in the same window replaces the file, so...",
       "source_file": "collector/storage.py",
       "source_location": "L30"
     },
     {
-      "id": "collector_storage_rationale_53",
-      "label": "Every raw window we still keep (up to 14 days), as one table.",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.py",
-      "file_type": "rationale",
-      "norm_label": "every raw window we still keep (up to 14 days), as one table.",
-      "source_file": "collector/storage.py",
-      "source_location": "L53"
-    },
-    {
       "id": "tests_test_storage_rationale_20",
       "label": "Three hand-made stations; `bikes` sets station 1's count so runs can be told\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "run.py",
+      "community_name": "write_snapshot",
       "file_type": "rationale",
       "norm_label": "three hand-made stations; `bikes` sets station 1's count so runs can be told...",
       "source_file": "tests/test_storage.py",
       "source_location": "L20"
+    },
+    {
+      "id": "api_data",
+      "label": "data.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "data.py",
+      "source_file": "api/data.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "collector/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_detect",
+      "label": "detect.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "detect.py",
+      "source_file": "collector/detect.py",
+      "source_location": "L1"
     },
     {
       "id": "collector_monitor",
@@ -5097,6 +4977,28 @@
       "source_location": "L1"
     },
     {
+      "id": "collector_run",
+      "label": "run.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "run.py",
+      "source_file": "collector/run.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_storage",
+      "label": "storage.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "storage.py",
+      "source_file": "collector/storage.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_monitor",
       "label": "test_monitor.py",
       "_origin": "ast",
@@ -5106,6 +5008,83 @@
       "norm_label": "test_monitor.py",
       "source_file": "tests/test_monitor.py",
       "source_location": "L1"
+    },
+    {
+      "id": "tests_test_run",
+      "label": "test_run.py",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "code",
+      "norm_label": "test_run.py",
+      "source_file": "tests/test_run.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_data_rationale_1",
+      "label": "Reads the collected files for the API. Nothing here writes: the API looks at\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "reads the collected files for the api. nothing here writes: the api looks at...",
+      "source_file": "api/data.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_data_rationale_13",
+      "label": "Sort key: numeric ids as numbers (2 before 10), so pages are stable and\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "sort key: numeric ids as numbers (2 before 10), so pages are stable and...",
+      "source_file": "api/data.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "collector_config_rationale_15",
+      "label": "# TODO: add the public repo URL once it exists, so the feed owners can see who\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "# todo: add the public repo url once it exists, so the feed owners can see who...",
+      "source_file": "collector/config.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "collector_detect_rationale_1",
+      "label": "Change detection. Pure functions: snapshots in, events out.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "change detection. pure functions: snapshots in, events out.",
+      "source_file": "collector/detect.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_detect_rationale_76",
+      "label": "Every confirmed episode in the snapshots, stations and feed together.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "every confirmed episode in the snapshots, stations and feed together.",
+      "source_file": "collector/detect.py",
+      "source_location": "L76"
+    },
+    {
+      "id": "collector_detect_rationale_92",
+      "label": "Combine the saved event history with episodes recomputed from the raw days we\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "combine the saved event history with episodes recomputed from the raw days we...",
+      "source_file": "collector/detect.py",
+      "source_location": "L92"
     },
     {
       "id": "collector_monitor_rationale_1",
@@ -5172,6 +5151,50 @@
       "norm_label": "counts for the health section: how many windows we expected and what happened.",
       "source_file": "collector/monitor.py",
       "source_location": "L99"
+    },
+    {
+      "id": "collector_run_rationale_1",
+      "label": "One scheduled run: python -m collector.run",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "one scheduled run: python -m collector.run",
+      "source_file": "collector/run.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_run_rationale_49",
+      "label": "Collect, record what happened, then update events and alerts. The record and\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "collect, record what happened, then update events and alerts. the record and...",
+      "source_file": "collector/run.py",
+      "source_location": "L49"
+    },
+    {
+      "id": "collector_storage_rationale_1",
+      "label": "Partitioned files and retention.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "partitioned files and retention.",
+      "source_file": "collector/storage.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "collector_storage_rationale_53",
+      "label": "Every raw window we still keep (up to 14 days), as one table.",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "pandas",
+      "file_type": "rationale",
+      "norm_label": "every raw window we still keep (up to 14 days), as one table.",
+      "source_file": "collector/storage.py",
+      "source_location": "L53"
     },
     {
       "id": "tests_test_monitor_rationale_23",
@@ -5329,6 +5352,28 @@
       "source_location": "L20"
     },
     {
+      "id": "collector_init",
+      "label": "collector/__init__.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "test_skeleton.py",
+      "file_type": "code",
+      "norm_label": "collector/__init__.py",
+      "source_file": "collector/__init__.py",
+      "source_location": null
+    },
+    {
+      "id": "tests_test_skeleton",
+      "label": "test_skeleton.py",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "test_skeleton.py",
+      "file_type": "code",
+      "norm_label": "test_skeleton.py",
+      "source_file": "tests/test_skeleton.py",
+      "source_location": "L1"
+    },
+    {
       "id": "api_auth",
       "label": "auth.py",
       "_origin": "ast",
@@ -5348,17 +5393,6 @@
       "file_type": "rationale",
       "norm_label": "api-key check and rate limiter.",
       "source_file": "api/auth.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "api_data",
-      "label": "data.py",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "code",
-      "norm_label": "data.py",
-      "source_file": "api/data.py",
       "source_location": "L1"
     },
     {
@@ -5406,17 +5440,6 @@
       "source_location": ""
     },
     {
-      "id": "collector_config",
-      "label": "config.py",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "collector/config.py",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_test_api",
       "label": "test_api.py",
       "_origin": "ast",
@@ -5448,28 +5471,6 @@
       "norm_label": "parametrize",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "api_data_rationale_1",
-      "label": "Reads the collected files for the API. Nothing here writes: the API looks at\u2026",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "rationale",
-      "norm_label": "reads the collected files for the api. nothing here writes: the api looks at...",
-      "source_file": "api/data.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "api_data_rationale_13",
-      "label": "Sort key: numeric ids as numbers (2 before 10), so pages are stable and\u2026",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "rationale",
-      "norm_label": "sort key: numeric ids as numbers (2 before 10), so pages are stable and...",
-      "source_file": "api/data.py",
-      "source_location": "L13"
     },
     {
       "id": "api_data_rationale_18",
@@ -5538,15 +5539,15 @@
       "source_location": "L19"
     },
     {
-      "id": "collector_config_rationale_15",
-      "label": "# TODO: add the public repo URL once it exists, so the feed owners can see who\u2026",
+      "id": "tests_test_detect_py_parametrize",
+      "label": "parametrize",
       "_origin": "ast",
-      "community": 8,
-      "community_name": "test_api.py",
-      "file_type": "rationale",
-      "norm_label": "# todo: add the public repo url once it exists, so the feed owners can see who...",
-      "source_file": "collector/config.py",
-      "source_location": "L15"
+      "community": 9,
+      "community_name": "Repository",
+      "file_type": "code",
+      "norm_label": "parametrize",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "api_data_rationale_54",
@@ -5571,16 +5572,15 @@
       "source_location": "L61"
     },
     {
-      "id": "numpy",
-      "label": "numpy",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "test_detect.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "numpy",
-      "source_file": "",
-      "type": "external"
+      "id": "collector_detect_rationale_14",
+      "label": "Give every row exactly one state. The first matching rule wins, so the order\u2026",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Repository",
+      "file_type": "rationale",
+      "norm_label": "give every row exactly one state. the first matching rule wins, so the order...",
+      "source_file": "collector/detect.py",
+      "source_location": "L14"
     },
     {
       "id": "dataclasses",
@@ -5591,6 +5591,30 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "dataclasses",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "json",
+      "label": "json",
+      "_origin": "semantic",
+      "community": 1,
+      "community_name": "fetch.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "json",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "re",
+      "label": "re",
+      "_origin": "semantic",
+      "community": 1,
+      "community_name": "fetch.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "re",
       "source_file": "",
       "type": "external"
     },
@@ -5691,14 +5715,14 @@
       "type": "external"
     },
     {
-      "id": "json",
-      "label": "json",
+      "id": "math",
+      "label": "math",
       "_origin": "semantic",
       "community": 13,
       "community_name": "test_pages.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "json",
+      "norm_label": "math",
       "source_file": "",
       "type": "external"
     },
@@ -5715,18 +5739,6 @@
       "type": "external"
     },
     {
-      "id": "re",
-      "label": "re",
-      "_origin": "semantic",
-      "community": 13,
-      "community_name": "test_pages.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "re",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "shutil",
       "label": "shutil",
       "_origin": "semantic",
@@ -5735,18 +5747,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "shutil",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "importlib",
-      "label": "importlib",
-      "_origin": "semantic",
-      "community": 2,
-      "community_name": "HttpError",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "importlib",
       "source_file": "",
       "type": "external"
     },
@@ -5787,14 +5787,14 @@
       "type": "external"
     },
     {
-      "id": "sys",
-      "label": "sys",
+      "id": "datetime",
+      "label": "datetime",
       "_origin": "semantic",
-      "community": 3,
-      "community_name": "run.py",
+      "community": 4,
+      "community_name": "pandas",
       "external": true,
       "file_type": "concept",
-      "norm_label": "sys",
+      "norm_label": "datetime",
       "source_file": "",
       "type": "external"
     },
@@ -5811,14 +5811,26 @@
       "type": "external"
     },
     {
-      "id": "datetime",
-      "label": "datetime",
+      "id": "sys",
+      "label": "sys",
       "_origin": "semantic",
-      "community": 8,
-      "community_name": "test_api.py",
+      "community": 4,
+      "community_name": "pandas",
       "external": true,
       "file_type": "concept",
-      "norm_label": "datetime",
+      "norm_label": "sys",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "importlib",
+      "label": "importlib",
+      "_origin": "semantic",
+      "community": 6,
+      "community_name": "test_skeleton.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "importlib",
       "source_file": "",
       "type": "external"
     },
@@ -5871,13 +5883,14 @@
       "type": "external"
     },
     {
-      "id": "math",
-      "label": "math",
-      "community": 13,
-      "community_name": "test_pages.py",
+      "id": "numpy",
+      "label": "numpy",
+      "_origin": "semantic",
+      "community": 9,
+      "community_name": "Repository",
       "external": true,
       "file_type": "concept",
-      "norm_label": "math",
+      "norm_label": "numpy",
       "source_file": "",
       "type": "external"
     }
@@ -7740,7 +7753,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L348",
+      "source_location": "L354",
       "weight": 1.0
     },
     {
@@ -7752,7 +7765,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L362",
+      "source_location": "L368",
       "weight": 1.0
     },
     {
@@ -7764,7 +7777,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L363",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
@@ -7776,7 +7789,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L426",
+      "source_location": "L432",
       "weight": 1.0
     },
     {
@@ -7788,7 +7801,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L426",
+      "source_location": "L432",
       "weight": 1.0
     },
     {
@@ -7800,7 +7813,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L428",
+      "source_location": "L434",
       "weight": 1.0
     },
     {
@@ -7812,7 +7825,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L429",
+      "source_location": "L435",
       "weight": 1.0
     },
     {
@@ -7824,7 +7837,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L430",
+      "source_location": "L436",
       "weight": 1.0
     },
     {
@@ -7836,7 +7849,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L431",
+      "source_location": "L437",
       "weight": 1.0
     },
     {
@@ -7848,7 +7861,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L218",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -7860,7 +7873,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L229",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -7872,7 +7885,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L247",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -7884,7 +7897,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L105",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -7896,7 +7909,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L106",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -7908,7 +7921,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L107",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
@@ -7920,7 +7933,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L258",
+      "source_location": "L264",
       "weight": 1.0
     },
     {
@@ -7932,7 +7945,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L260",
+      "source_location": "L266",
       "weight": 1.0
     },
     {
@@ -7944,7 +7957,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L273",
+      "source_location": "L279",
       "weight": 1.0
     },
     {
@@ -7956,7 +7969,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L285",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -7968,7 +7981,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L295",
+      "source_location": "L301",
       "weight": 1.0
     },
     {
@@ -7980,7 +7993,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L296",
+      "source_location": "L302",
       "weight": 1.0
     },
     {
@@ -7992,7 +8005,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L382",
+      "source_location": "L388",
       "weight": 1.0
     },
     {
@@ -8004,7 +8017,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L386",
+      "source_location": "L392",
       "weight": 1.0
     },
     {
@@ -8016,7 +8029,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L389",
+      "source_location": "L395",
       "weight": 1.0
     },
     {
@@ -8028,7 +8041,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L396",
+      "source_location": "L402",
       "weight": 1.0
     },
     {
@@ -8040,7 +8053,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L397",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -8052,7 +8065,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L399",
+      "source_location": "L405",
       "weight": 1.0
     },
     {
@@ -8064,7 +8077,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L401",
+      "source_location": "L407",
       "weight": 1.0
     },
     {
@@ -8076,7 +8089,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L404",
+      "source_location": "L410",
       "weight": 1.0
     },
     {
@@ -8088,7 +8101,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L408",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -8100,7 +8113,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L409",
+      "source_location": "L415",
       "weight": 1.0
     },
     {
@@ -8112,7 +8125,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L410",
+      "source_location": "L416",
       "weight": 1.0
     },
     {
@@ -8124,7 +8137,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L162",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -8136,7 +8149,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L174",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -8148,7 +8161,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L176",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -8160,7 +8173,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L176",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -8172,7 +8185,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L180",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -8184,7 +8197,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L131",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -8196,7 +8209,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "pages/build.py",
-      "source_location": "L324",
+      "source_location": "L330",
       "weight": 1.0
     },
     {
@@ -10536,7 +10549,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L191",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -10596,7 +10609,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L231",
+      "source_location": "L248",
       "weight": 1.0
     },
     {
@@ -10608,7 +10621,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L231",
+      "source_location": "L248",
       "weight": 1.0
     },
     {
@@ -10620,7 +10633,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L153",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -10632,7 +10645,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L156",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -10644,7 +10657,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L283",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -10656,7 +10669,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L283",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -10668,7 +10681,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L283",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -10680,7 +10693,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L172",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -10692,7 +10705,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L172",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -10704,7 +10717,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L175",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -10716,7 +10729,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L175",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -10728,7 +10741,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L175",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -10740,7 +10753,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L176",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -10752,7 +10765,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L176",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -10764,7 +10777,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L179",
+      "source_location": "L196",
       "weight": 1.0
     },
     {
@@ -10776,7 +10789,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L181",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -10788,7 +10801,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L181",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -10800,7 +10813,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L160",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -10812,7 +10825,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L293",
+      "source_location": "L310",
       "weight": 1.0
     },
     {
@@ -10824,7 +10837,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L296",
+      "source_location": "L313",
       "weight": 1.0
     },
     {
@@ -10948,6 +10961,54 @@
       "weight": 1.0
     },
     {
+      "source": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "target": "tests_test_pages_ago",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "target": "pandas",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "target": "pages_build_status",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L161",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "target": "tests_test_pages_snapshot",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tests/test_pages.py",
+      "source_location": "L161",
+      "weight": 1.0
+    },
+    {
       "source": "tests_test_pages_test_health_strips_gaps_and_lateness",
       "target": "pandas",
       "relation": "calls",
@@ -10956,7 +11017,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L248",
+      "source_location": "L265",
       "weight": 1.0
     },
     {
@@ -10968,7 +11029,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L258",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -10980,7 +11041,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L258",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -10992,7 +11053,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L198",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -11004,7 +11065,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L199",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -11040,7 +11101,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L239",
+      "source_location": "L256",
       "weight": 1.0
     },
     {
@@ -11052,7 +11113,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L239",
+      "source_location": "L256",
       "weight": 1.0
     },
     {
@@ -11100,7 +11161,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L218",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -11112,7 +11173,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L218",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -11208,7 +11269,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L273",
+      "source_location": "L290",
       "weight": 1.0
     },
     {
@@ -11220,7 +11281,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_pages.py",
-      "source_location": "L275",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
@@ -14808,7 +14869,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L168",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -14820,7 +14881,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L168",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -14832,7 +14893,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L168",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -14844,7 +14905,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L168",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -14856,7 +14917,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L168",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -14868,7 +14929,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L169",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -14880,7 +14941,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L169",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -14892,7 +14953,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L170",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -14916,7 +14977,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/test_pages.py",
-      "source_location": "L279",
+      "source_location": "L296",
       "weight": 1.0
     },
     {
@@ -17992,7 +18053,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L125",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -18003,7 +18064,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L157",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -18014,7 +18075,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L192",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -18025,7 +18086,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L210",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -18036,7 +18097,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L254",
+      "source_location": "L260",
       "weight": 1.0
     },
     {
@@ -18047,7 +18108,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L321",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -18058,7 +18119,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L332",
+      "source_location": "L338",
       "weight": 1.0
     },
     {
@@ -18069,7 +18130,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L341",
+      "source_location": "L347",
       "weight": 1.0
     },
     {
@@ -18080,7 +18141,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L379",
+      "source_location": "L385",
       "weight": 1.0
     },
     {
@@ -18091,7 +18152,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L385",
+      "source_location": "L391",
       "weight": 1.0
     },
     {
@@ -18102,7 +18163,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L414",
+      "source_location": "L420",
       "weight": 1.0
     },
     {
@@ -18113,7 +18174,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L423",
+      "source_location": "L429",
       "weight": 1.0
     },
     {
@@ -18124,7 +18185,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L60",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -18135,7 +18196,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L72",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -18146,7 +18207,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L84",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -19427,13 +19488,24 @@
     },
     {
       "source": "tests_test_pages",
+      "target": "tests_test_pages_test_header_uptime_covers_the_last_24_hours_only",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_pages.py",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages",
       "target": "tests_test_pages_test_a_station_name_cannot_break_out_of_the_script_tag",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L152",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -19444,7 +19516,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L159",
+      "source_location": "L176",
       "weight": 1.0
     },
     {
@@ -19455,7 +19527,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L167",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -19466,7 +19538,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L189",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -19477,7 +19549,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L196",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -19488,7 +19560,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L215",
+      "source_location": "L232",
       "weight": 1.0
     },
     {
@@ -19499,7 +19571,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L224",
+      "source_location": "L241",
       "weight": 1.0
     },
     {
@@ -19510,18 +19582,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L238",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_test_pages",
-      "target": "tests_test_pages_test_health_strips_gaps_and_lateness",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/test_pages.py",
-      "source_location": "L244",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -19537,13 +19598,24 @@
     },
     {
       "source": "tests_test_pages",
+      "target": "tests_test_pages_test_health_strips_gaps_and_lateness",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_pages.py",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages",
       "target": "tests_test_pages_test_type_labels_and_rules_from_openapi",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L270",
+      "source_location": "L287",
       "weight": 1.0
     },
     {
@@ -19554,18 +19626,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L278",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_test_pages",
-      "target": "tests_test_pages_test_build_writes_the_api_page_and_openapi_file",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/test_pages.py",
-      "source_location": "L292",
+      "source_location": "L295",
       "weight": 1.0
     },
     {
@@ -19577,6 +19638,17 @@
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
       "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_pages",
+      "target": "tests_test_pages_test_build_writes_the_api_page_and_openapi_file",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_pages.py",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -21318,113 +21390,113 @@
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_126",
+      "source": "pages_build_rationale_129",
       "target": "pages_build_timelapse",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L126",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_158",
+      "source": "pages_build_rationale_161",
       "target": "pages_build_status",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L158",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_193",
+      "source": "pages_build_rationale_199",
       "target": "pages_build_headline",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L193",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_211",
+      "source": "pages_build_rationale_217",
       "target": "pages_build_empty_heatmap",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L211",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_255",
+      "source": "pages_build_rationale_261",
       "target": "pages_build_health_section",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L255",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_322",
+      "source": "pages_build_rationale_328",
       "target": "pages_build_type_label",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L322",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_380",
+      "source": "pages_build_rationale_386",
       "target": "pages_build_safe_json",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L380",
+      "source_location": "L386",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_61",
+      "source": "pages_build_rationale_64",
       "target": "pages_build_format_duration",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L61",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_73",
+      "source": "pages_build_rationale_76",
       "target": "pages_build_local_time",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L73",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
-      "source": "pages_build_rationale_85",
+      "source": "pages_build_rationale_88",
       "target": "pages_build_event_cards",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "pages/build.py",
-      "source_location": "L85",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -21494,14 +21566,14 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_pages_rationale_190",
+      "source": "tests_test_pages_rationale_207",
       "target": "tests_test_pages_hourly_rows",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_pages.py",
-      "source_location": "L190",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -21580,7 +21652,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "pages/build.py",
-      "source_location": "L132",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -22013,7 +22085,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_pages.py",
-      "source_location": "L172",
+      "source_location": "L189",
       "weight": 0.8
     },
     {
@@ -22024,7 +22096,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_pages.py",
-      "source_location": "L173",
+      "source_location": "L190",
       "weight": 0.8
     },
     {
@@ -22040,5 +22112,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e55dad931f28e0343d039e7693d2aea2d1180320"
+  "built_at_commit": "7c39dc9d6b2d345c78e26901052ab55c2f746a09"
 }

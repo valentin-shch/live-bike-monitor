@@ -2,9 +2,10 @@
   "0": "test_detect.py",
   "1": "fetch.py",
   "2": "HttpError",
-  "3": "run.py",
+  "3": "write_snapshot",
   "4": "pandas",
   "5": "Bicing live: a bike-share monitor that runs without me",
+  "6": "test_skeleton.py",
   "7": "auth.py",
   "8": "test_api.py",
   "9": "Repository",
@@ -15,5 +16,6 @@
   "14": "api/__init__.py",
   "15": "demo/__init__.py",
   "16": "pages/__init__.py",
-  "17": "worker.js"
+  "17": "worker.js",
+  "18": "isolated"
 }

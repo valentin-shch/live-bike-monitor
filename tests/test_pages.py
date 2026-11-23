@@ -147,6 +147,23 @@ def test_status_levels():
     assert status(None, NO_EVENTS, NO_RUNS, NOW)["label"] == "No data yet"
 
 
+def test_header_uptime_covers_the_last_24_hours_only():
+    from collector.monitor import RUN_COLUMNS
+
+    # Three days of runs: the first two missed every other window, the last day missed none.
+    windows = [ago(15 * i) for i in range(1, 3 * 96)]
+    runs = pd.DataFrame(
+        [{"started_at": w, "window_utc": w, "outcome": "ok"} for i, w in enumerate(windows) if i < 96 or i % 2],
+        columns=RUN_COLUMNS,
+    )
+    runs["window_utc"] = runs["window_utc"].map(lambda w: w.replace(minute=w.minute // 15 * 15))
+
+    uptime = status(snapshot(ago(6)), NO_EVENTS, runs, NOW)["uptime"]
+
+    assert uptime["full_period"] and uptime["expected"] == 97  # 96 before + the current window
+    assert uptime["share"] > 0.98  # the bad days before do not drag the header down
+
+
 # ---------- the page ----------
 
 def test_a_station_name_cannot_break_out_of_the_script_tag():

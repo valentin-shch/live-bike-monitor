@@ -33,7 +33,7 @@
 
   {% if status.uptime %}
   <dl class="facts">
-    <div><dt>Uptime, {{ "7 days" if status.uptime.full_week else "since " ~ status.uptime.since }}</dt>
+    <div><dt>Uptime, {{ "last 24 h" if status.uptime.full_period else "since " ~ status.uptime.since }}</dt>
       <dd class="num">{{ "%.1f" | format(100 * status.uptime.share) }}%</dd></div>
     <div><dt>Windows collected</dt><dd class="num">{{ status.uptime.ok }} / {{ status.uptime.expected }}</dd></div>
     {% if headline %}<div><dt>Offline now</dt><dd class="num">{{ headline.offline }}</dd></div>{% endif %}
